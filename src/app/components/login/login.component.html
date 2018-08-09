@@ -1,0 +1,92 @@
+<div class="principal">
+    <div class="interior">
+
+        <div class="logo">
+            <div class="logo_img">
+                <img src="../../../assets/img/images.png" alt="">
+            </div>
+        </div>
+        <div class="logo_abajo">
+            <div class="pantallas">
+                <div class="login_pantalla">
+                    <div class="inputs">
+                        <form action="" ngNativeValidate (ngSubmit)="login()">
+                            <div class="contenido_arriba">
+                                <div class="input_contenido">
+                                    <span class="span_input">Bienvenido a Quick</span>
+                                </div>
+                                <div class="input_contenido1">
+                                    <div class="input-group">
+                                        <input required [(ngModel)]="this.UsuService.login.usuario" name="usuario" type="text" class="input" id="nombre" name="nombre">
+                                        <label class="label" id="label_nombre" for="nombre">Usuario</label>
+                                    </div>
+                                </div>
+                                <div class="input_contenido2">
+                                    <div class="input-group">
+                                        <input required [(ngModel)]="this.UsuService.login.password" name="password" type="text" id="clave" class="input" name="clave">
+                                        <label class="label_cla" id="label_clave" for="clave">Contraseña</label>
+                                    </div>
+                                </div>
+                                <div class="input_contenido3">
+                                    <span class="span_contenido3">No cerrar sesion</span>
+                                    <i id="no_cerrar" class="fas fa-toggle-off"></i>
+                                </div>
+                                <div class="input_contenido4">
+                                    <button type="submit" class="iniciar">Iniciar sesion</button>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                    <div class="buttons" id="buttons">
+                        <button id="btnGoogle" type="button" class="buton_Google">Iniciar Google+</button>
+                        <span class="registrar" (click)="cambiarDePantallas(1)">Crear cuenta</span>
+                    </div>
+                </div>
+                <div class="registrar_pantalla">
+                    <div class="icono_volver">
+                        <span class="spa_registro">Formulario de registro</span>
+                    </div>
+                    <div class="formulario">
+                        <form action="" ngNativeValidate (ngSubmit)="CrearUsuario()">
+                            <div class="input_formulario">
+                                <div class="input-group">
+                                    <input type="text" required [(ngModel)]="this.UsuService.UsuarioObjeto.nombre" name="nombre" class="input" id="nombreCom">
+                                    <label class="label" id="label_nombreCom" for="nombreCom">Nombre completo</label>
+                                </div>
+                            </div>
+                            <div class="input_formulario">
+                                <div class="input-group">
+                                    <input type="text" class="input" required [(ngModel)]="this.UsuService.UsuarioObjeto.correo" name="correo" id="correo">
+                                    <label class="label" id="label_correo" for="correo">Correo electrinico</label>
+                                </div>
+                            </div>
+                            <div class="input_formulario">
+                                <div class="input-group">
+                                    <input type="text" class="input" required [(ngModel)]="this.UsuService.UsuarioObjeto.usuario" name="usuario" id="usuario">
+                                    <label class="label" id="label_usuario" for="usuario">Nombre de usuario</label>
+                                </div>
+                            </div>
+                            <div class="input_formulario">
+                                <div class="input-group">
+                                    <input type="password" class="input" required [(ngModel)]="this.UsuService.UsuarioContra.password" name="password" id="contra">
+                                    <label class="label" id="label_contra" for="contra">Contraseña</label>
+                                </div>
+                            </div>
+                            <div class="input_formulario">
+                                <div class="input-group">
+                                    <input type="password" class="input" required id="confir_contra" [(ngModel)]="this.UsuService.UsuarioContra.password1" name="password1">
+                                    <label class="label" id="label_confir_contra" for="confir_contra">Confirmar contraseña</label>
+                                </div>
+                            </div>
+                            <div class="input_formulario1">
+                                <button title="Volver al login" (click)="cambiarDePantallas(2)" type="button" class="volver_button"><i class="fas fa-undo"></i></button>
+                                <button type="submit" class="registrar_button">Registrar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

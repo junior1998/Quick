@@ -1,0 +1,513 @@
+<div class="principal">
+    <div class="content">
+        <div class="content_top">
+            <div class="interior_buscar">
+                <div class="imagen">
+                    <img class="img" src="../../../../assets/img/images1.png">
+                </div>
+                <div class="input_buscar">
+                    <input id="buscar_registrar" type="text" class="input_bus">
+                </div>
+                <!-- <div class="buttons">
+                    <button class="button_nuevo">Inicio</button>
+                </div> -->
+            </div>
+        </div>
+        <div class="content_bottom">
+            <div id="registrar" class="resultado_en_registrar">
+                <div class="izquierda_content_bottom">
+
+                    <div class="formulario_registrar">
+                        <div class="input_formulario">
+                            <div class="input-group">
+                                <input type="text" class="input" id="problema" name="problema">
+                                <label class="label" id="label_problema" for="problema">Problema</label>
+                            </div>
+                        </div>
+                        <div class="input_formulario1">
+                            <div class="input-group">
+                                <textarea type="text" class="textarea" id="descripcion" name="descripcion"></textarea>
+                                <label class="label" id="label_descripcion" for="descripcion">Descripcion del problema</label>
+                            </div>
+                        </div>
+                        <div class="input_formulario2">
+                            <div class="input-group">
+                                <textarea type="text" class="textarea" id="solucion" name="solucion"></textarea>
+                                <label class="label" id="label_solucion" for="solucion">Solucion</label>
+                            </div>
+                        </div>
+                        <div class="bottones_">
+                            <button id="volver" [routerLink]="['/pages/','inicio']" title="Volver al inicio" type="button" class="volver_button"><i class="fas fa-undo"></i></button>
+                            <button type="submit" title="Guardar solucion" class="registrar_button">Guardar</button>
+                        </div>
+                    </div>
+                    <div class="mis_soluciones">
+                        <i id="abrir_mis_solucion" (click)="abrir_pantalla()" class="fas fa-sign-in-alt"></i>
+                    </div>
+                </div>
+                <div class="derecha_content_bottom">
+                    <div class="carta_content_bottom">
+                        <div class="carta_interior_bottom">
+                            <div class="carta_">
+                                <div class="editar"><i class="fas fa-pencil-alt"></i></div>
+                                <div class="eliminar"><i class="fas fa-times"></i></div>
+
+                                <div class="problema">
+                                    <div class="problema_titulo">
+                                        <span class="span_titulo">Problema:</span>
+                                    </div>
+                                    <div class="problema_contenido">
+                                        <span class="span_contenido">Error de jquery</span>
+
+                                    </div>
+                                </div>
+                                <div class="descripcion_problema">
+                                    <div class="descripcion_titulo">
+                                        <span class="span_titulo">Descripcion:</span>
+                                    </div>
+                                    <div class="descripcion_contenido">
+                                        <span class="span_contenido">Error al tratar de usar jquery</span>
+
+                                    </div>
+                                </div>
+                                <div class="solucion">
+                                    <div class="solucion_titulo">
+                                        <span class="span_titulo">Solucion:</span>
+                                    </div>
+                                    <div class="solucion_contenido">
+                                        <span class="span_contenido">
+                                            Entrar a la pagina https://code.jquery.com/ y tomar un cdn y pegarlo antessfdfsdf</span>
+
+                                    </div>
+                                </div>
+                                <div class="Fecha">
+                                    <div class="Fecha_titulo">
+                                        <span class="span_titulo">Fecha:</span>
+                                    </div>
+                                    <div class="Fecha_contenido">
+                                        <span class="span_contenido">
+                                                02/08/18</span>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+            </div>
+            <div id="solucion" class="registrar_solucion">
+                <div class="interior_resultado">
+                    <div class="carta">
+                        <div class="carta_interior">
+                            <div class="Error">
+                                <div class="error_titulo">
+                                    <span class="span_titulo">Problema:</span>
+                                </div>
+                                <div class="error_contenido">
+                                    <span class="span_contenido">Error de jquery</span>
+
+                                </div>
+                            </div>
+                            <div class="tipo_error">
+                                <div class="tipo_error_titulo">
+                                    <span class="span_titulo">Descripcion del problema:</span>
+                                </div>
+                                <div class="tipo_error_contenido">
+                                    <span class="span_contenido">Error al tratar de usar jquery</span>
+
+                                </div>
+                            </div>
+                            <div class="fecha">
+                                <div class="fecha_titulo">
+                                    <span class="span_titulo">Fecha:</span>
+                                </div>
+                                <div class="fecha_contenido">
+                                    <span class="span_contenido">25/08/19</span>
+
+                                </div>
+                            </div>
+                            <div class="solucion">
+                                <div class="solucion_titulo">
+                                    <span class="span_titulo">Solucion:</span>
+                                </div>
+                                <div class="solucion_contenido">
+                                    <span class="span_contenido">Entrar a la pagina https://code.jquery.com/ y tomar un cdn y pegarlo antes del cierre de la etiqueta body en el index.html</span>
+
+                                </div>
+                            </div>
+                            <div class="publicado">
+                                <div class="publicado_titulo">
+                                    <span class="span_titulo">Publicado por:</span>
+                                </div>
+                                <div class="publicado_contenido">
+                                    <span class="span_contenido">Juniorliban</span>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carta">
+                        <div class="carta_interior">
+                            <div class="Error">
+                                <div class="error_titulo">
+                                    <span class="span_titulo">Problema:</span>
+                                </div>
+                                <div class="error_contenido">
+                                    <span class="span_contenido">Error de jquery</span>
+
+                                </div>
+                            </div>
+                            <div class="tipo_error">
+                                <div class="tipo_error_titulo">
+                                    <span class="span_titulo">Descripcion del problema:</span>
+                                </div>
+                                <div class="tipo_error_contenido">
+                                    <span class="span_contenido">Error al tratar de usar jquery</span>
+
+                                </div>
+                            </div>
+                            <div class="fecha">
+                                <div class="fecha_titulo">
+                                    <span class="span_titulo">Fecha:</span>
+                                </div>
+                                <div class="fecha_contenido">
+                                    <span class="span_contenido">25/08/19</span>
+
+                                </div>
+                            </div>
+                            <div class="solucion">
+                                <div class="solucion_titulo">
+                                    <span class="span_titulo">Solucion:</span>
+                                </div>
+                                <div class="solucion_contenido">
+                                    <span class="span_contenido">Entrar a la pagina https://code.jquery.com/ y tomar un cdn y pegarlo antes del cierre de la etiqueta body en el index.html</span>
+
+                                </div>
+                            </div>
+                            <div class="publicado">
+                                <div class="publicado_titulo">
+                                    <span class="span_titulo">Publicado por:</span>
+                                </div>
+                                <div class="publicado_contenido">
+                                    <span class="span_contenido">Juniorliban</span>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carta">
+                        <div class="carta_interior">
+                            <div class="Error">
+                                <div class="error_titulo">
+                                    <span class="span_titulo">Problema:</span>
+                                </div>
+                                <div class="error_contenido">
+                                    <span class="span_contenido">Error de jquery</span>
+
+                                </div>
+                            </div>
+                            <div class="tipo_error">
+                                <div class="tipo_error_titulo">
+                                    <span class="span_titulo">Descripcion del problema:</span>
+                                </div>
+                                <div class="tipo_error_contenido">
+                                    <span class="span_contenido">Error al tratar de usar jquery</span>
+
+                                </div>
+                            </div>
+                            <div class="fecha">
+                                <div class="fecha_titulo">
+                                    <span class="span_titulo">Fecha:</span>
+                                </div>
+                                <div class="fecha_contenido">
+                                    <span class="span_contenido">25/08/19</span>
+
+                                </div>
+                            </div>
+                            <div class="solucion">
+                                <div class="solucion_titulo">
+                                    <span class="span_titulo">Solucion:</span>
+                                </div>
+                                <div class="solucion_contenido">
+                                    <span class="span_contenido">Entrar a la pagina https://code.jquery.com/ y tomar un cdn y pegarlo antes del cierre de la etiqueta body en el index.html</span>
+
+                                </div>
+                            </div>
+                            <div class="publicado">
+                                <div class="publicado_titulo">
+                                    <span class="span_titulo">Publicado por:</span>
+                                </div>
+                                <div class="publicado_contenido">
+                                    <span class="span_contenido">Juniorliban</span>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carta">
+                        <div class="carta_interior">
+                            <div class="Error">
+                                <div class="error_titulo">
+                                    <span class="span_titulo">Problema:</span>
+                                </div>
+                                <div class="error_contenido">
+                                    <span class="span_contenido">Error de jquery</span>
+
+                                </div>
+                            </div>
+                            <div class="tipo_error">
+                                <div class="tipo_error_titulo">
+                                    <span class="span_titulo">Descripcion del problema:</span>
+                                </div>
+                                <div class="tipo_error_contenido">
+                                    <span class="span_contenido">Error al tratar de usar jquery</span>
+
+                                </div>
+                            </div>
+                            <div class="fecha">
+                                <div class="fecha_titulo">
+                                    <span class="span_titulo">Fecha:</span>
+                                </div>
+                                <div class="fecha_contenido">
+                                    <span class="span_contenido">25/08/19</span>
+
+                                </div>
+                            </div>
+                            <div class="solucion">
+                                <div class="solucion_titulo">
+                                    <span class="span_titulo">Solucion:</span>
+                                </div>
+                                <div class="solucion_contenido">
+                                    <span class="span_contenido">Entrar a la pagina https://code.jquery.com/ y tomar un cdn y pegarlo antes del cierre de la etiqueta body en el index.html</span>
+
+                                </div>
+                            </div>
+                            <div class="publicado">
+                                <div class="publicado_titulo">
+                                    <span class="span_titulo">Publicado por:</span>
+                                </div>
+                                <div class="publicado_contenido">
+                                    <span class="span_contenido">Juniorliban</span>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carta">
+                        <div class="carta_interior">
+                            <div class="Error">
+                                <div class="error_titulo">
+                                    <span class="span_titulo">Problema:</span>
+                                </div>
+                                <div class="error_contenido">
+                                    <span class="span_contenido">Error de jquery</span>
+
+                                </div>
+                            </div>
+                            <div class="tipo_error">
+                                <div class="tipo_error_titulo">
+                                    <span class="span_titulo">Descripcion del problema:</span>
+                                </div>
+                                <div class="tipo_error_contenido">
+                                    <span class="span_contenido">Error al tratar de usar jquery</span>
+
+                                </div>
+                            </div>
+                            <div class="fecha">
+                                <div class="fecha_titulo">
+                                    <span class="span_titulo">Fecha:</span>
+                                </div>
+                                <div class="fecha_contenido">
+                                    <span class="span_contenido">25/08/19</span>
+
+                                </div>
+                            </div>
+                            <div class="solucion">
+                                <div class="solucion_titulo">
+                                    <span class="span_titulo">Solucion:</span>
+                                </div>
+                                <div class="solucion_contenido">
+                                    <span class="span_contenido">Entrar a la pagina https://code.jquery.com/ y tomar un cdn y pegarlo antes del cierre de la etiqueta body en el index.html</span>
+
+                                </div>
+                            </div>
+                            <div class="publicado">
+                                <div class="publicado_titulo">
+                                    <span class="span_titulo">Publicado por:</span>
+                                </div>
+                                <div class="publicado_contenido">
+                                    <span class="span_contenido">Juniorliban</span>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carta">
+                        <div class="carta_interior">
+                            <div class="Error">
+                                <div class="error_titulo">
+                                    <span class="span_titulo">Problema:</span>
+                                </div>
+                                <div class="error_contenido">
+                                    <span class="span_contenido">Error de jquery</span>
+
+                                </div>
+                            </div>
+                            <div class="tipo_error">
+                                <div class="tipo_error_titulo">
+                                    <span class="span_titulo">Descripcion del problema:</span>
+                                </div>
+                                <div class="tipo_error_contenido">
+                                    <span class="span_contenido">Error al tratar de usar jquery</span>
+
+                                </div>
+                            </div>
+                            <div class="fecha">
+                                <div class="fecha_titulo">
+                                    <span class="span_titulo">Fecha:</span>
+                                </div>
+                                <div class="fecha_contenido">
+                                    <span class="span_contenido">25/08/19</span>
+
+                                </div>
+                            </div>
+                            <div class="solucion">
+                                <div class="solucion_titulo">
+                                    <span class="span_titulo">Solucion:</span>
+                                </div>
+                                <div class="solucion_contenido">
+                                    <span class="span_contenido">Entrar a la pagina https://code.jquery.com/ y tomar un cdn y pegarlo antes del cierre de la etiqueta body en el index.html</span>
+
+                                </div>
+                            </div>
+                            <div class="publicado">
+                                <div class="publicado_titulo">
+                                    <span class="span_titulo">Publicado por:</span>
+                                </div>
+                                <div class="publicado_contenido">
+                                    <span class="span_contenido">Juniorliban</span>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carta">
+                        <div class="carta_interior">
+                            <div class="Error">
+                                <div class="error_titulo">
+                                    <span class="span_titulo">Problema:</span>
+                                </div>
+                                <div class="error_contenido">
+                                    <span class="span_contenido">Error de jquery</span>
+
+                                </div>
+                            </div>
+                            <div class="tipo_error">
+                                <div class="tipo_error_titulo">
+                                    <span class="span_titulo">Descripcion del problema:</span>
+                                </div>
+                                <div class="tipo_error_contenido">
+                                    <span class="span_contenido">Error al tratar de usar jquery</span>
+
+                                </div>
+                            </div>
+                            <div class="fecha">
+                                <div class="fecha_titulo">
+                                    <span class="span_titulo">Fecha:</span>
+                                </div>
+                                <div class="fecha_contenido">
+                                    <span class="span_contenido">25/08/19</span>
+
+                                </div>
+                            </div>
+                            <div class="solucion">
+                                <div class="solucion_titulo">
+                                    <span class="span_titulo">Solucion:</span>
+                                </div>
+                                <div class="solucion_contenido">
+                                    <span class="span_contenido">Entrar a la pagina https://code.jquery.com/ y tomar un cdn y pegarlo antes del cierre de la etiqueta body en el index.html</span>
+
+                                </div>
+                            </div>
+                            <div class="publicado">
+                                <div class="publicado_titulo">
+                                    <span class="span_titulo">Publicado por:</span>
+                                </div>
+                                <div class="publicado_contenido">
+                                    <span class="span_contenido">Juniorliban</span>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carta">
+                        <div class="carta_interior">
+                            <div class="Error">
+                                <div class="error_titulo">
+                                    <span class="span_titulo">Problema:</span>
+                                </div>
+                                <div class="error_contenido">
+                                    <span class="span_contenido">Error de jquery</span>
+
+                                </div>
+                            </div>
+                            <div class="tipo_error">
+                                <div class="tipo_error_titulo">
+                                    <span class="span_titulo">Descripcion del problema:</span>
+                                </div>
+                                <div class="tipo_error_contenido">
+                                    <span class="span_contenido">Error al tratar de usar jquery</span>
+
+                                </div>
+                            </div>
+                            <div class="fecha">
+                                <div class="fecha_titulo">
+                                    <span class="span_titulo">Fecha:</span>
+                                </div>
+                                <div class="fecha_contenido">
+                                    <span class="span_contenido">25/08/19</span>
+
+                                </div>
+                            </div>
+                            <div class="solucion">
+                                <div class="solucion_titulo">
+                                    <span class="span_titulo">Solucion:</span>
+                                </div>
+                                <div class="solucion_contenido">
+                                    <span class="span_contenido">Entrar a la pagina https://code.jquery.com/ y tomar un cdn y pegarlo antes del cierre de la etiqueta body en el index.html</span>
+
+                                </div>
+                            </div>
+                            <div class="publicado">
+                                <div class="publicado_titulo">
+                                    <span class="span_titulo">Publicado por:</span>
+                                </div>
+                                <div class="publicado_contenido">
+                                    <span class="span_contenido">Juniorliban</span>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
