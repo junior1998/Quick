@@ -27,15 +27,11 @@ export class InicioComponent implements OnInit {
   ngOnInit() {
 
     this.socket.socket.on('usuariosEmitidos',(ElusuarioEmitido)=>{
-      console.log(ElusuarioEmitido.usuario)
       this._UsuarioService.UsuarioObjeto = ElusuarioEmitido.usuario
     })
 
     this._UsuarioService.CargarUsuarioID().subscribe((resp:any)=>{
       this._UsuarioService.UsuarioObjeto = resp;
-
-      
-      
     })
     // this._UsuarioService.renuevaToken().subscribe((resp:any)=>{
     //   console.log(resp)
@@ -565,12 +561,15 @@ export class InicioComponent implements OnInit {
 
   salir(){
     this._UsuarioService.logout()
+    
   }
 
   actualizarUsuario(){
     let contraConfir = this._UsuarioService.ConfirmarContrase();
     
     if(contraConfir == "La contraseña no son iguales"){
+      console.log(contraConfir)
+
       swal({
         type: 'error',
         title: 'Error',
@@ -583,26 +582,58 @@ export class InicioComponent implements OnInit {
            this.socket.socket.emit('usuarioBD',{
              usuarioActua: resp
            })
-           console.log(resp)
-          // swal(
-          //   'Usuario: ' + resp.usuario,
-          //   'Creado correctamente',
-          //   'success'
-          // )
+           console.log(contraConfir)
+          swal(
+            'Usuario: ' + resp.usuario,
+            'Actualizado correctamente',
+            'success'
+          )
   
-          // this._UsuarioService.UsuarioObjeto = "";
-          // this._UsuarioService.UsuarioContra = "";
-          // setTimeout(()=>{
+          this._UsuarioService.UsuarioObjeto = "";
+         
+          this._UsuarioService.UsuarioContra.password = "";
+          this._UsuarioService.UsuarioContra.password1 = "";
+          setTimeout(()=>{
             
-          //   $('input').blur();
+            $('input').blur();
   
-          // },1000)
+          },1000)
   
          }))
+
         
-       }
-     }
+       }else{
+        if(contraConfir == "esta vacio"){
+          console.log(contraConfir)
+
+          this._UsuarioService.EditarUsuario().subscribe(((resp:any)=>{
+            this.socket.socket.emit('usuarioBD',{
+              usuarioActua: resp
+            })
+            console.log(resp)
+           swal(
+             'Usuario: ' + resp.usuario,
+             'Actualizado correctamente',
+             'success'
+           )
+
+           this._UsuarioService.UsuarioObjeto = "";
+           this._UsuarioService.UsuarioContra.password = "";
+           this._UsuarioService.UsuarioContra.password1 = "";
+           setTimeout(()=>{
+             
+             $('input').blur();
     
+           },1000)
+    
+          }))
+
+
+         
+        }
+       }
+
+     }
   
   }
 

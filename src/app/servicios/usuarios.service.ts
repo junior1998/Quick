@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
-
+declare var $;
 
 
 @Injectable({
@@ -21,6 +21,8 @@ export class UsuariosService {
     "imagen":"nada",
     
   }
+
+  contra:any = 'si';
 
   UsuarioContra:any = {
     "password":"",
@@ -55,12 +57,12 @@ export class UsuariosService {
     localStorage.removeItem('usuario');
 
     this.router.navigate(['/login']);
+    location.reload()
 
   }
 
   estaLogeado(){
     let token = localStorage.getItem('token');
-    console.log(token)
     if(token == null || token == ''){
       this.router.navigate(['/login']);
 
@@ -72,28 +74,40 @@ export class UsuariosService {
   }
 
   ConfirmarContrase(){
-    if(this.UsuarioContra.password === this.UsuarioContra.password1){
-      this.UsuarioObjeto.password = this.UsuarioContra.password;
-
-      return "La contraseña son iguales";
+    
+    if(this.UsuarioContra.password == "" && this.UsuarioContra.password1 == ""){
+      this.contra = 'no';
+      return "esta vacio";
     }else{
-      return "La contraseña no son iguales";
+      if(this.UsuarioContra.password === this.UsuarioContra.password1){
+        this.UsuarioObjeto.password = this.UsuarioContra.password1;
+        this.contra = 'si';
+        return "La contraseña son iguales";
+      }else{
+        console.log('contrase;as no son iguales')
+          return "La contraseña no son iguales";
+      }
+  
     }
+
   }
 
   CrearUsuario(){
     let url = 'http://localhost:3000/usuarios';
+    console.log(this.UsuarioObjeto)
    return this._http.post(url,this.UsuarioObjeto).pipe(map((resp:any)=>{
      return resp.usuarios;
    }))
   }
 
   EditarUsuario(){
+    alert(this.contra)
     let id = localStorage.getItem('id');
     let token = localStorage.getItem('token')
+    console.log(this.UsuarioObjeto)
 
-    let url = 'http://localhost:3000/usuarios/' + id + '?token=' + token;
-
+    let url = 'http://localhost:3000/usuarios/' + id + '/' + this.contra + '?token=' + token;
+ 
     return this._http.put(url,this.UsuarioObjeto).pipe(map((resp:any)=>{
       return resp.usuario;
     }))

@@ -7,7 +7,6 @@ import * as socketIo from 'socket.io-client';
 export class SocketService {
   socket = socketIo('http://localhost:5000')
   constructor() { 
-    alert("Funciono socket")
 
   }
 }

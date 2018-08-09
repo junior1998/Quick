@@ -15,7 +15,6 @@ export class VerificarTokenGuard implements CanActivate {
   canActivate(): Promise<boolean> | boolean {
 
 
-    console.log("inicio de token gard")
 
     let token = localStorage.getItem('token');
     let payload = JSON.parse( atob(token.split('.')[1]));
@@ -27,7 +26,6 @@ export class VerificarTokenGuard implements CanActivate {
       return false;
     }
 
-    console.log(payload)
     return this.VericaRenueva(payload.exp);
   }
 
