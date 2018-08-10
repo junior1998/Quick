@@ -17,6 +17,8 @@ export class LoginComponent implements OnInit {
   estado_ventana = 1;
   no_cerrar:boolean;
   estado_cerrar = 1;
+
+
   constructor(
     public UsuService: UsuariosService,
     public router:Router
@@ -273,45 +275,44 @@ export class LoginComponent implements OnInit {
   }
 
   CrearUsuario(){
-   let contraConfir = this.UsuService.ConfirmarContrase()
-   if(contraConfir == "La contraseña no son iguales"){
+  //  let contraConfir = this.UsuService.ConfirmarContrase()
+  if(this.UsuService.UsuarioContra.password == this.UsuService.UsuarioContra.password1){
+    this.UsuService.UsuarioObjeto.password = this.UsuService.UsuarioContra.password1
+    console.log(this.UsuService.UsuarioObjeto)
+    this.UsuService.CrearUsuario().subscribe(((resp:any)=>{
+      swal(
+        'Usuario: ' + resp.usuario,
+        'Creado correctamente',
+        'success'
+      )
+      // this.UsuService.UsuarioContra.password1 = "";
+
+      setTimeout(()=>{
+        
+        $('input').blur();
+
+      },1000)
+
+     }), error=>{
+      
+      //  var texto = error.error.errors.message.split(":")
+       console.log(error.error)
+       
+       swal(
+        'Error',
+         error.error.errors,
+        
+        'error'
+      )
+     })
+    
+   }else{
     swal({
       type: 'error',
       title: 'Error',
       text: 'Las contraseñas tienen que ser iguales'
       
     })
-   }else{
-     if(contraConfir == "La contraseña son iguales"){
-       this.UsuService.CrearUsuario().subscribe(((resp:any)=>{
-        swal(
-          'Usuario: ' + resp.usuario,
-          'Creado correctamente',
-          'success'
-        )
-
-        this.UsuService.UsuarioObjeto = "";
-        this.UsuService.UsuarioContra = "";
-        setTimeout(()=>{
-          
-          $('input').blur();
-
-        },1000)
-
-       }), error=>{
-        
-        //  var texto = error.error.errors.message.split(":")
-         console.log(error.error)
-         
-         swal(
-          'Error',
-           error.error.errors,
-          
-          'error'
-        )
-       })
-      
-     }
    }
    
   }

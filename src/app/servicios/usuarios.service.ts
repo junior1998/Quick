@@ -19,6 +19,7 @@ export class UsuariosService {
     "usuario":"",
     "password":"",
     "google":"",
+    "imagen":""
     
   }
 
@@ -53,10 +54,20 @@ export class UsuariosService {
     return this._SubirImagen.subirArchivo(archivo,id)
     .catch((resp:any)=>{
       console.log(resp)
+      swal(
+        'Imagen',
+        'Error al subir la imagen',
+        'error'
+      )
       // alertify.log( resp.mensaje + ' ' + this.configuraObjeto.nombre);
     })
     .then((resp:any)=>{
       console.log(resp)
+      swal(
+        'Imagen',
+        'Actualizada correctamente',
+        'success'
+      )
       // alertify.log( resp.mensaje + ' ' +this.configuraObjeto.nombre);
       // this.CargarDatos().subscribe()
     })
@@ -68,6 +79,7 @@ export class UsuariosService {
     let id = localStorage.getItem('id');
     let url = 'http://localhost:3000/usuarios/usuario/' + id;
     return this._http.get(url).pipe(map((resp:any)=>{
+      console
       return resp.usuario
     }))
 
@@ -102,7 +114,6 @@ export class UsuariosService {
       return "esta vacio";
     }else{
       if(this.UsuarioContra.password === this.UsuarioContra.password1){
-        this.UsuarioObjeto.password = this.UsuarioContra.password1;
         this.contra = 'si';
         return "La contraseña son iguales";
       }else{
@@ -118,6 +129,17 @@ export class UsuariosService {
     let url = 'http://localhost:3000/usuarios';
     console.log(this.UsuarioObjeto)
    return this._http.post(url,this.UsuarioObjeto).pipe(map((resp:any)=>{
+    this.UsuarioObjeto = {
+      "correo":"",
+      "usuario":"",
+      "password":"",
+      "google":"",
+      
+    }
+    this.UsuarioContra = {
+      "password":"",
+      "password1":""
+    }
      return resp.usuarios;
    }))
   }

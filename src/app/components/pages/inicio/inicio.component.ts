@@ -20,6 +20,7 @@ export class InicioComponent implements OnInit {
   SubirImagen: File;
   texto = "Registrar datos";
   imgTemporal: string;
+  google:boolean;
 
   constructor(
     public _UsuarioService:UsuariosService,
@@ -35,7 +36,11 @@ export class InicioComponent implements OnInit {
     })
 
     this._UsuarioService.CargarUsuarioID().subscribe((resp:any)=>{
+      
       this._UsuarioService.UsuarioObjeto = resp;
+      // this.google = this._UsuarioService.UsuarioObjeto.google;
+      console.log(this._UsuarioService.UsuarioObjeto)
+
     })
     // this._UsuarioService.renuevaToken().subscribe((resp:any)=>{
     //   console.log(resp)
@@ -595,7 +600,6 @@ export class InicioComponent implements OnInit {
   
           this._UsuarioService.UsuarioObjeto = "";
          
-          this._UsuarioService.UsuarioContra.password = "";
           this._UsuarioService.UsuarioContra.password1 = "";
           setTimeout(()=>{
             
@@ -622,7 +626,6 @@ export class InicioComponent implements OnInit {
            )
 
            this._UsuarioService.UsuarioObjeto = "";
-           this._UsuarioService.UsuarioContra.password = "";
            this._UsuarioService.UsuarioContra.password1 = "";
            setTimeout(()=>{
              
