@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { SubirImagenService } from './subir-imagen.service';
 
 declare var $;
 
@@ -17,8 +18,7 @@ export class UsuariosService {
     "correo":"",
     "usuario":"",
     "password":"",
-    "google":"no google",
-    "imagen":"nada",
+    "google":"",
     
   }
 
@@ -36,11 +36,33 @@ export class UsuariosService {
   }
 
   usuarioIniciado:any;
+
+  archivoPrinService: File;
   
   constructor(
     public _http:HttpClient,
-    public router:Router
+    public router:Router,
+    public _SubirImagen:SubirImagenService
   ) { }
+
+  EditarYSubirFoto(archivo:any){
+    console.log(archivo)
+    let id = localStorage.getItem('id');
+
+
+    return this._SubirImagen.subirArchivo(archivo,id)
+    .catch((resp:any)=>{
+      console.log(resp)
+      // alertify.log( resp.mensaje + ' ' + this.configuraObjeto.nombre);
+    })
+    .then((resp:any)=>{
+      console.log(resp)
+      // alertify.log( resp.mensaje + ' ' +this.configuraObjeto.nombre);
+      // this.CargarDatos().subscribe()
+    })
+
+    
+  }
 
   CargarUsuarioID(){
     let id = localStorage.getItem('id');

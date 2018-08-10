@@ -14,6 +14,8 @@ import { RegistrarSolucionComponent } from './components/pages/registrar-solucio
 import {FormsModule} from '@angular/forms'
 import {HttpClientModule} from '@angular/common/http';
 import { ProtegerRutasGuard } from './servicios/proteger-rutas.guard';
+import { ImagenPipe } from './pipes/imagen.pipe';
+//Pipes
 
 
 @NgModule({
@@ -25,7 +27,8 @@ import { ProtegerRutasGuard } from './servicios/proteger-rutas.guard';
     ComponentsComponent,
     PerfilComponent,
     SolucionComponent,
-    RegistrarSolucionComponent
+    RegistrarSolucionComponent,
+    ImagenPipe
   ],
   imports: [
     BrowserModule,

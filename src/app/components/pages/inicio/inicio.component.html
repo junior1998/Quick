@@ -403,11 +403,15 @@
                 <div class="contenedor_logo">
                     <div class="logo">
                         <label for="input_ocultar" class="labell">
-                            <input type="file" name="foto" id="input_ocultar">
-                            <div class="imagen_perfil">
-                                <!-- <img src="../../../../assets/img/photo.png"> -->
-                                <div class="imagen_defecto"></div>
-                            </div>
+                            <input (change)="imagen($event.target.files[0])" type="file" name="foto" id="input_ocultar">
+                            <!-- <div class="imagen_perfil">
+                            </div> -->
+                            <img *ngIf="!imgTemporal" [src]="this._UsuarioService.UsuarioObjeto.imagen | imagen"  >
+                            <img *ngIf="imgTemporal" [src]="imgTemporal"  >
+
+                            <!-- <div class="imagen_defecto">
+                                
+                            </div> -->
                         </label>
                     </div>
                 </div>

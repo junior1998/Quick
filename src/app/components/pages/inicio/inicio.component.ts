@@ -17,6 +17,10 @@ export class InicioComponent implements OnInit {
   ventana_alto;
   estado_ventana_resultado = 1;
 
+  SubirImagen: File;
+  texto = "Registrar datos";
+  imgTemporal: string;
+
   constructor(
     public _UsuarioService:UsuariosService,
     public router:Router,
@@ -635,6 +639,36 @@ export class InicioComponent implements OnInit {
 
      }
   
+  }
+
+
+  imagen(archivo:File){
+    console.log(archivo)
+    if(!archivo){
+      this._UsuarioService.archivoPrinService = null;
+      return;
+    }
+
+    if(archivo.type.indexOf('image') < 0){
+      this._UsuarioService.archivoPrinService = null;
+      
+      return;
+    }
+
+    this._UsuarioService.archivoPrinService = archivo;
+
+    let reader = new FileReader();
+    let urlImagenTemp = reader.readAsDataURL(archivo);
+    reader.onloadend = () => {
+
+      
+      this.imgTemporal = reader.result;
+
+      
+        this._UsuarioService.EditarYSubirFoto(this._UsuarioService.archivoPrinService)
+      
+      
+    }
   }
 
  
