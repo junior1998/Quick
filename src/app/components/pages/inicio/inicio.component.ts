@@ -38,13 +38,10 @@ export class InicioComponent implements OnInit {
     this._UsuarioService.CargarUsuarioID().subscribe((resp:any)=>{
       
       this._UsuarioService.UsuarioObjeto = resp;
-      // this.google = this._UsuarioService.UsuarioObjeto.google;
-      console.log(this._UsuarioService.UsuarioObjeto)
+      this.google = this._UsuarioService.UsuarioObjeto.google;
 
     })
-    // this._UsuarioService.renuevaToken().subscribe((resp:any)=>{
-    //   console.log(resp)
-    // })
+   
   
     $(document).ready(function () {
       
