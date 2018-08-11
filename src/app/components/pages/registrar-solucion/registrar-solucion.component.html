@@ -18,28 +18,30 @@
                 <div class="izquierda_content_bottom">
 
                     <div class="formulario_registrar">
-                        <div class="input_formulario">
-                            <div class="input-group">
-                                <input type="text" class="input" id="problema" name="problema">
-                                <label class="label" id="label_problema" for="problema">Problema</label>
+                        <form action="" ngNativeValidate (ngSubmit)="registrar()">
+                            <div class="input_formulario">
+                                <div class="input-group">
+                                    <input required [(ngModel)]="this._mensaje.mensaje.nombre_error" name="nombre_error" type="text" class="input" id="problema">
+                                    <label class="label" id="label_problema" for="problema">Problema</label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="input_formulario1">
-                            <div class="input-group">
-                                <textarea type="text" class="textarea" id="descripcion" name="descripcion"></textarea>
-                                <label class="label" id="label_descripcion" for="descripcion">Descripcion del problema</label>
+                            <div class="input_formulario1">
+                                <div class="input-group">
+                                    <textarea required type="text" [(ngModel)]="this._mensaje.mensaje.tipo_error" name="tipo_error" class="textarea" id="descripcion" name="descripcion"></textarea>
+                                    <label class="label" id="label_descripcion" for="descripcion">Descripcion del problema</label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="input_formulario2">
-                            <div class="input-group">
-                                <textarea type="text" class="textarea" id="solucion" name="solucion"></textarea>
-                                <label class="label" id="label_solucion" for="solucion">Solucion</label>
+                            <div class="input_formulario2">
+                                <div class="input-group">
+                                    <textarea type="text" required [(ngModel)]="this._mensaje.mensaje.solucion" name="solucion" class="textarea" id="solucion" name="solucion"></textarea>
+                                    <label class="label" id="label_solucion" for="solucion">Solucion</label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="bottones_">
-                            <button id="volver" [routerLink]="['/pages/','inicio']" title="Volver al inicio" type="button" class="volver_button"><i class="fas fa-undo"></i></button>
-                            <button type="submit" title="Guardar solucion" class="registrar_button">Guardar</button>
-                        </div>
+                            <div class="bottones_">
+                                <button id="volver" [routerLink]="['/pages/','inicio']" title="Volver al inicio" type="button" class="volver_button"><i class="fas fa-undo"></i></button>
+                                <button type="submit" title="Guardar solucion" class="registrar_button">Guardar</button>
+                            </div>
+                        </form>
                     </div>
                     <div class="mis_soluciones">
                         <i id="abrir_mis_solucion" (click)="abrir_pantalla()" class="fas fa-sign-in-alt"></i>

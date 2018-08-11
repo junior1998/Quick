@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MensajesService } from '../../../servicios/mensajes.service';
+import swal from 'sweetalert2';
+
 declare var $;
 @Component({
   selector: 'app-registrar-solucion',
@@ -7,11 +10,17 @@ declare var $;
 })
 export class RegistrarSolucionComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public _mensaje:MensajesService
+  ) { }
 
   estado_ventana_ = 1;
 
   ngOnInit() {
+  this._mensaje.traerTodosLosMensajes().subscribe()
+
+
+
     $(document).ready(()=>{
 
       $('#problema').click(function() {
@@ -162,6 +171,16 @@ export class RegistrarSolucionComponent implements OnInit {
       this.estado_ventana_ = 1;
 
     }
+  }
+
+  registrar(){
+    this._mensaje.CrearMensaje().subscribe((resp:any)=>{
+      swal(
+        'Problema',
+        'Registrado correctamente',
+        'success'
+      )
+    })
   }
 
 
