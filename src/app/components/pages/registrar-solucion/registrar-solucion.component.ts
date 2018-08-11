@@ -15,9 +15,11 @@ export class RegistrarSolucionComponent implements OnInit {
   ) { }
 
   estado_ventana_ = 1;
+  
 
   ngOnInit() {
-  this._mensaje.traerTodosLosMensajes().subscribe()
+  // this._mensaje.traerTodosLosMensajes().subscribe()
+  this._mensaje.TraerMensajeConId().subscribe()
 
 
 
@@ -149,6 +151,8 @@ export class RegistrarSolucionComponent implements OnInit {
 
         }
       }
+
+      
     })
   }
 
@@ -158,9 +162,9 @@ export class RegistrarSolucionComponent implements OnInit {
       $("#abrir_mis_solucion").addClass("fa-sign-out-alt");
       $("#abrir_mis_solucion").removeClass("fa-sign-in-alt");
       $(".resultado_en_registrar").css("margin-left","-315px");
-      // $(".izquierda_content_bottom").css("opacity","0");
+      // $(".izquierda_content_bottom").css("opacity","0.5");
 
-
+      
       this.estado_ventana_ = 2;
 
     }else{
@@ -174,13 +178,30 @@ export class RegistrarSolucionComponent implements OnInit {
   }
 
   registrar(){
-    this._mensaje.CrearMensaje().subscribe((resp:any)=>{
-      swal(
-        'Problema',
-        'Registrado correctamente',
-        'success'
-      )
-    })
+    if(this._mensaje.texto_boton == 'Guardar'){
+      this._mensaje.CrearMensaje().subscribe((resp:any)=>{
+        this._mensaje.TraerMensajeConId().subscribe()
+      })
+    }else{
+      if(this._mensaje.texto_boton == 'Actualizar'){
+        this._mensaje.ActualizarMensaje().subscribe((resp:any)=>{
+
+        })
+      }
+    }
+   
+
+  }
+
+  editar(id:string){
+    this._mensaje.texto_boton = 'Actualizar';
+    this._mensaje.TraerMensaje(id).subscribe()
+    this.abrir_pantalla()
+    console.log(id)
+  }
+  
+  buscarSolucion(busqueda:string){
+    this._mensaje.BucarMensajes(busqueda).subscribe()
   }
 
 

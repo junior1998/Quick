@@ -1,3 +1,23 @@
+.Usted {
+    width: 100%;
+    height: 100%;
+    h1 {
+        font-size: 35px;
+        color: gray;
+        text-align: center;
+    }
+}
+
+.resultadoss {
+    width: 100%;
+    height: 100%;
+    h1 {
+        font-size: 35px;
+        color: gray;
+        text-align: center;
+    }
+}
+
 .principal {
     width: 100%;
     height: 100%;
@@ -432,6 +452,8 @@
                     height: 100%;
                     // background: #7dac25;
                     float: left;
+                    // border-left: 1px solid rgb(218, 218, 218);
+                    // border-top: 1px solid rgb(218, 218, 218);
                     .carta_content_bottom {
                         width: 100%;
                         height: 100%;
