@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MensajesService } from '../../../servicios/mensajes.service';
 import swal from 'sweetalert2';
+import { SocketService } from '../../../servicios/socket.service';
+
 
 declare var $;
 @Component({
@@ -11,15 +13,22 @@ declare var $;
 export class RegistrarSolucionComponent implements OnInit {
 
   constructor(
-    public _mensaje:MensajesService
+    public _mensaje:MensajesService,
+    public _socketService:SocketService
   ) { }
 
   estado_ventana_ = 1;
   
 
   ngOnInit() {
+  
+
+
   // this._mensaje.traerTodosLosMensajes().subscribe()
-  this._mensaje.TraerMensajeConId().subscribe()
+  this._mensaje.TraerMensajeConId().subscribe((resp:any)=>{
+    this._mensaje.mensajes = resp;
+    console.log(this._mensaje.mensajes)
+  })
 
 
 
@@ -180,7 +189,9 @@ export class RegistrarSolucionComponent implements OnInit {
   registrar(){
     if(this._mensaje.texto_boton == 'Guardar'){
       this._mensaje.CrearMensaje().subscribe((resp:any)=>{
-        this._mensaje.TraerMensajeConId().subscribe()
+        this._mensaje.TraerMensajeConId().subscribe((resp:any)=>{
+          this._mensaje.mensajes = resp
+        })
       })
     }else{
       if(this._mensaje.texto_boton == 'Actualizar'){
@@ -202,6 +213,10 @@ export class RegistrarSolucionComponent implements OnInit {
   
   buscarSolucion(busqueda:string){
     this._mensaje.BucarMensajes(busqueda).subscribe()
+  }
+
+  borrar(id:string){
+    this._mensaje.BorrarMensaje(id).subscribe()
   }
 
 

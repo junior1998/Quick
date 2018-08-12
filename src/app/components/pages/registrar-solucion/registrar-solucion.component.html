@@ -56,7 +56,7 @@
                         <div class="carta_interior_bottom" *ngFor="let problema of this._mensaje.mensajes">
                             <div class="carta_">
                                 <div class="editar" (click)="editar(problema._id)"><i class="fas fa-pencil-alt"></i></div>
-                                <div class="eliminar"><i class="fas fa-times"></i></div>
+                                <div class="eliminar" (click)="borrar(problema._id)"><i class="fas fa-times"></i></div>
 
                                 <div class="problema">
                                     <div class="problema_titulo">

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import swal from 'sweetalert2';
+import { SocketService } from './socket.service';
+
 declare var $;
 
 @Injectable({
@@ -20,8 +22,14 @@ export class MensajesService {
   mensajeCreado:any={}
   texto_boton = 'Guardar';
   constructor(
-    public _Http:HttpClient
-  ) { }
+    public _Http:HttpClient,
+    public _socketService:SocketService
+  ) {
+    this._socketService.socket.on('mensajesEmitido',(elMensajeEmitido)=>{
+      this.mensajes = []
+      this.mensajes = elMensajeEmitido.mensaje;
+    })
+   }
 
   BucarMensajes(busqueda:string){
     let url = 'http://localhost:3000/mensajes/buscar/' + busqueda;
@@ -45,13 +53,17 @@ export class MensajesService {
 
 
     return this._Http.post(url,this.mensaje).pipe(map((resp:any)=>{
-      console.log(this.mensajeCreado)
+
         swal(
             'Problema',
             'Registrado correctamente',
             'success'
           )
-      this.mensajeCreado = resp.mensaje;
+      this.TraerMensajeConId().subscribe((resp:any)=>{
+        this._socketService.socket.emit('mensajeDB',{
+          mensajeActual: resp
+        })
+      })
       this.mensaje = {
         "nombre_error":"",
         "tipo_error":"",
@@ -114,15 +126,22 @@ export class MensajesService {
     let url = 'http://localhost:3000/mensajes/' + id;
     
     return this._Http.get(url).pipe(map((resp:any)=>{
-      this.mensajes = resp.mensaje;
+       return resp.mensaje;
     }))
   }
+
 
 
   ActualizarMensaje(){
     let url = 'http://localhost:3000/mensajes/' + this.mensaje._id;
     return this._Http.put(url,this.mensaje).pipe(map((resp:any)=>{
-      this.traerTodosLosMensajes().subscribe()
+      this.TraerMensajeConId().subscribe((resp:any)=>{
+        console.log(resp)
+        this._socketService.socket.emit('mensajeDB',{
+          mensajeActual: resp
+        })
+      })
+      
       swal(
         'Problema',
         'Actualizado correctamente',
@@ -136,8 +155,54 @@ export class MensajesService {
     $('#solucion').blur();
 
   },1000)
-      console.log(resp)
     }))
  
+  }
+
+  BorrarMensaje(id:string){
+    let url = 'http://localhost:3000/mensajes/borrar/' + id;
+
+    return this._Http.put(url,this.mensaje).pipe(map((resp:any)=>{
+      console.log(resp)
+      const swalWithBootstrapButtons = swal.mixin({
+        confirmButtonClass: 'btn btn-success',
+        cancelButtonClass: 'btn btn-danger',
+        buttonsStyling: false,
+      })
+      
+      swalWithBootstrapButtons({
+        title: 'Seguro que desea borrarlo?',
+        text: "Si continua no podrá revertir los cambios",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Si, borrar',
+        cancelButtonText: 'No, Cancelar',
+        reverseButtons: true
+      }).then((result) => {
+        if (result.value) {
+          swalWithBootstrapButtons(
+            'Borrado',
+            'Tu solucion se ha borrado correctamente',
+            'success'
+          )
+
+          this.TraerMensajeConId().subscribe((resp:any)=>{
+            this._socketService.socket.emit('mensajeDB',{
+              mensajeActual: resp
+            })
+          })
+        } else if (
+          // Read more about handling dismissals
+          result.dismiss === swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons(
+            'Cancelado',
+            'Tu solucion no fue borrada',
+            'error'
+          )
+        }
+      })
+      
+    }))
   }
 }

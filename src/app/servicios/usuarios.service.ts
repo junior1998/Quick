@@ -79,7 +79,6 @@ export class UsuariosService {
     let id = localStorage.getItem('id');
     let url = 'http://localhost:3000/usuarios/usuario/' + id;
     return this._http.get(url).pipe(map((resp:any)=>{
-      console
       return resp.usuario
     }))
 
