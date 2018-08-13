@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MensajesService } from '../../../servicios/mensajes.service';
 import swal from 'sweetalert2';
 import { SocketService } from '../../../servicios/socket.service';
-
-
+import { Router } from '@angular/router';
 declare var $;
+
 @Component({
   selector: 'app-registrar-solucion',
   templateUrl: './registrar-solucion.component.html',
@@ -14,7 +14,8 @@ export class RegistrarSolucionComponent implements OnInit {
 
   constructor(
     public _mensaje:MensajesService,
-    public _socketService:SocketService
+    public _socketService:SocketService,
+    public router:Router
   ) { }
 
   estado_ventana_ = 1;
@@ -206,9 +207,17 @@ export class RegistrarSolucionComponent implements OnInit {
 
   editar(id:string){
     this._mensaje.texto_boton = 'Actualizar';
-    this._mensaje.TraerMensaje(id).subscribe()
+    this._mensaje.TraerMensaje(id).subscribe((resp:any)=>{
+      this._mensaje.mensaje = resp
+      setTimeout(()=>{
+        
+        $('#problema').click();
+        $('#descripcion').click();
+        $('#solucion').click();
+
+      },100)
+    })
     this.abrir_pantalla()
-    console.log(id)
   }
   
   buscarSolucion(busqueda:string){
@@ -217,6 +226,10 @@ export class RegistrarSolucionComponent implements OnInit {
 
   borrar(id:string){
     this._mensaje.BorrarMensaje(id).subscribe()
+  }
+
+  enviarAsolucion(id:string){
+  this.router.navigate(['/pages/solucion',id])
   }
 
 

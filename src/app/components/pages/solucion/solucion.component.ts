@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { MensajesService } from '../../../servicios/mensajes.service';
+import { map } from 'rxjs/operators';
+
 declare var $;
 @Component({
   selector: 'app-solucion',
@@ -7,12 +11,44 @@ declare var $;
 })
 export class SolucionComponent implements OnInit {
 
-  constructor() { }
-  barra:number = 0; 
+  constructor(
+    public  activatedRoute:ActivatedRoute,
+    public _mensajesService:MensajesService
+  ) {
+    activatedRoute.params
+    .subscribe( params => {
+      this.id = params['id']
+      console.log(this.id)
+    })
+   }
+
+
+  barra:number; 
   like: number = 0;
   no_like: number = 0;
   valor;
+  id;
+  estado_like:number = 1;
+  estado_nolike:number = 1;
+  resultado:number;
   ngOnInit() {
+    this._mensajesService.TraerMensaje(this.id).subscribe((resp:any)=>{
+      this._mensajesService.mensaje = resp;
+      // this._mensajesService.Array_iduser = this._mensajesService.mensaje.likes;
+      // this.cargar_like()
+      this._mensajesService.confirmarLikes(this.id).subscribe((resp:any)=>{
+        let id = localStorage.getItem('id')
+        if(resp == id){
+          $('.fa-thumbs-up').css('color','#007bff')  
+          this.estado_like = 2;
+          this.cargar_like()
+        }
+      })
+    })
+
+   
+    
+
     $("#buscar_solucion1").keyup(()=>{
       if($("#buscar_solucion1").val().length >= 1){
         $(".content_bottom_solucion").css("opacity","0");
@@ -72,30 +108,101 @@ export class SolucionComponent implements OnInit {
   }
 
   likes(valor){
-    if(valor == 1){
+    if(valor == 1 && this.estado_like == 1){
       this.like = this.like + 1;
-      var resultado = this.like + this.no_like;
-      this.barra = this.like / resultado * 100;
+       this.resultado = this.like + this.no_like;
+      this.barra = this.like / this.resultado * 100;
+      console.log(this.resultado,this.barra)
+
+
+      if(this.no_like >= 1 && this.estado_nolike == 2){
+        this.no_like = this.no_like - 1;
+       this.resultado = this.like + this.no_like;
+      $('.fa-thumbs-down').css('color','#747474')
+      this.barra = this.like / this.resultado * 100;
+      this.estado_nolike = 1;
+      }
+      
+      this.estado_like = 2;
+      $('.fa-thumbs-up').css('color','#007bff')
+      this._mensajesService.Likes_no_likes('si','no',this.id,this.no_like,this.like).subscribe()
       return;
     }else{
-      if(valor == 2){
-        this.no_like = this.no_like + 1;
-      var resultado = this.like + this.no_like;
-      this.barra = this.no_like / resultado * 100;
-      
+      if(valor == 1 && this.estado_like == 2){
+        this.like = this.like - 1;
+         this.resultado = this.like + this.no_like;
+        this.barra = this.barra = this.like / this.resultado * 100;
+        if(this.no_like <= 0){
+          this.barra = this.like / this.resultado * 100;
+        }
+        console.log(this.barra)
+        this.estado_like = 1;
+        $('.fa-thumbs-up').css('color','#747474')
+        this._mensajesService.Likes_no_likes('si','no',this.id,this.no_like,this.like).subscribe()
+        return;
       }
     }
+    
+    if(valor == 2 && this.estado_nolike == 1){
+      if(this.like >= 1 && this.estado_like == 2){
+        this.like = this.like - 1;
+      this.resultado = this.like + this.no_like;
+      $('.fa-thumbs-up').css('color','#747474')
+      this.barra = this.like / this.resultado * 100;
+      this.estado_like = 1;
+      }
+      this.no_like = this.no_like + 1;
+      this.resultado = this.like + this.no_like;
+      // this.barra = this.no_like / this.resultado * 100;
+      this.estado_nolike = 2;
+      $('.fa-thumbs-down').css('color','#007bff')
+      this._mensajesService.Likes_no_likes('no','si',this.id,this.no_like,this.like).subscribe()
+      return;
+    }else{
+      if(valor == 2 && this.estado_nolike == 2){
+        this.no_like = this.no_like - 1;
+        this.resultado = this.like + this.no_like;
+        this.barra = this.no_like / this.resultado * 100;
+        if(this.no_like <= 0){
+          this.barra = this.no_like / this.resultado * 100;
+        }
+        this.estado_nolike = 1;
+        $('.fa-thumbs-down').css('color','#747474')
+        this._mensajesService.Likes_no_likes('no','si',this.id,this.no_like,this.like).subscribe()
+        return;
+      }
+    }
+    
 
-      var resultado = this.like + this.no_like;
-      this.barra = this.no_like / resultado * 100;
+      // this.resultado = this.like + this.no_like;
+      // this.barra = this.no_like / resultado * 100;
 
 
 
-      var resultado = this.like + this.no_like;
-      this.barra = this.like / resultado * 100;
+      // var resultado = this.like + this.no_like;
+      // this.barra = this.like / resultado * 100;
 
 
     
+  }
+
+  cargar_like(){
+    this.like = this._mensajesService.mensaje.like;
+    this.no_like = this._mensajesService.mensaje.no_like;
+
+    if(this.like == null){
+      this.like = 0;
+    }else{
+      if(this.no_like == undefined){
+        this.no_like = 0;
+      }
+    }
+
+    this.resultado = this.like + this.no_like;
+    this.barra = this.like / this.resultado * 100;
+    // this.barra = this.no_like / this.resultado * 100;
+
+    console.log(this.resultado, this.barra)
   }
 
 

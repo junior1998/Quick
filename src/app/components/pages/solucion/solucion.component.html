@@ -17,46 +17,48 @@
             <div class="carta_principal">
                 <div class="formulario_registrar">
                     <div class="formulario_mostrar">
-                        <div class="input_formulario">
-                            <div class="input-group">
-                                <input type="text" value="asdasd" class="input" id="problema_ver" name="problema_ver">
-                                <label class="label" id="label_problema_ver" for="problema_ver">Problema</label>
-                            </div>
-                        </div>
-                        <div class="input_formulario1">
-                            <div class="input-group">
-                                <textarea type="text" class="textarea" id="descripcion_ver" name="descripcion_ver">Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum. textarea Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum. textarea</textarea>
-                                <label class="label" id="label_descripcion_ver" for="descripcion_ver">Descripcion del problema</label>
-                            </div>
-                        </div>
-                        <div class="input_formulario2">
-                            <div class="input-group">
-                                <textarea type="text" class="textarea" id="solucion_ver" name="solucion_ver">Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum. Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.</textarea>
-                                <label class="label" id="label_solucion_ver" for="solucion_ver">Solucion</label>
-                            </div>
-                        </div>
-                        <div class="bottones_">
-                            <div class="volver">
-                                <button id="volver" [routerLink]="['/pages/','inicio']" title="Volver al inicio" type="button" class="volver_button"><i class="fas fa-undo"></i></button>
-
-                            </div>
-                            <div class="valoracion">
-                                <div class="likes">
-                                    <div class="like">
-                                        <i (click)="likes(1)" class="fas fa-thumbs-up"></i>
-                                        <span class="numero_like">{{like}}</span>
-                                    </div>
-                                    <div class="no-like">
-                                        <i (click)="likes(2)" class="fas fa-thumbs-down"></i>
-                                        <span class="numero_like">{{no_like}}</span>
-
-                                    </div>
-                                </div>
-                                <div class="progress" style="height: 3px;">
-                                    <div class="progress-bar" role="progressbar" [style.width]="barra + '%'" [attr.ariaValuenow]="barra" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        <form action="">
+                            <div class="input_formulario">
+                                <div class="input-group">
+                                    <input type="text" disabled [ngModel]="this._mensajesService.mensaje.nombre_error" name="nombre_error" value="asdasd" class="input" id="problema_ver">
+                                    <label class="label" id="label_problema_ver" for="problema_ver">Problema</label>
                                 </div>
                             </div>
-                        </div>
+                            <div class="input_formulario1">
+                                <div class="input-group">
+                                    <textarea type="text" disabled [ngModel]="this._mensajesService.mensaje.tipo_error" name="tipo_error" class="textarea" id="descripcion_ver">Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum. textarea Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum. textarea</textarea>
+                                    <label class="label" id="label_descripcion_ver" for="descripcion_ver">Descripcion del problema</label>
+                                </div>
+                            </div>
+                            <div class="input_formulario2">
+                                <div class="input-group">
+                                    <textarea type="text" disabled [ngModel]="this._mensajesService.mensaje.solucion" name="solucion" class="textarea" id="solucion_ver">Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum. Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.</textarea>
+                                    <label class="label" id="label_solucion_ver" for="solucion_ver">Solucion</label>
+                                </div>
+                            </div>
+                            <div class="bottones_">
+                                <div class="volver">
+                                    <button id="volver" [routerLink]="['/pages/','inicio']" title="Volver al inicio" type="button" class="volver_button"><i class="fas fa-undo"></i></button>
+
+                                </div>
+                                <div class="valoracion">
+                                    <div class="likes">
+                                        <div class="like">
+                                            <i (click)="likes(1)" class="fas fa-thumbs-up"></i>
+                                            <span class="numero_like">{{like}}</span>
+                                        </div>
+                                        <div class="no-like">
+                                            <i (click)="likes(2)" class="fas fa-thumbs-down"></i>
+                                            <span class="numero_like">{{no_like}}</span>
+
+                                        </div>
+                                    </div>
+                                    <div class="progress" style="height: 3px;">
+                                        <div class="progress-bar" role="progressbar" [style.width]="barra + '%'" [attr.ariaValuenow]="barra" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
 

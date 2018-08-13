@@ -15,11 +15,13 @@ export class MensajesService {
     "tipo_error":"",
     "solucion":"",
     "hecho_id":"",
-    "hecho_objeto":""
+    "hecho_objeto":"",
+    "likes":""
   }
   mensajes:any[]=[]
   Resultado_busqueda:any[]=[]
   mensajeCreado:any={}
+  Array_iduser:any[]=[]
   texto_boton = 'Guardar';
   constructor(
     public _Http:HttpClient,
@@ -29,6 +31,58 @@ export class MensajesService {
       this.mensajes = []
       this.mensajes = elMensajeEmitido.mensaje;
     })
+   }
+
+   confirmarLikes(id:string){
+      let url = 'http://localhost:3000/mensajes/likes/' + id ;
+      let id_user = localStorage.getItem('id');
+
+
+       return this._Http.get(url).pipe(map((resp:any)=>{
+        console.log(resp)
+
+        this.Array_iduser = resp.mensaje[0].likes;
+        for(let id in this.Array_iduser){
+          this.Array_iduser[id]
+          if(this.Array_iduser[id] == id_user){
+           return this.Array_iduser[id];
+          }
+        }
+       }))
+   }
+
+   Likes_no_likes(like:string,no_like:string,id:string,no_like_envia:number,like_envia:number){
+     if(like == "si"){
+      console.log('entro en el si')
+        let id_user = localStorage.getItem('id');
+        this.Array_iduser.push(id_user);
+        this.mensaje.likes = this.Array_iduser;
+       let url = 'http://localhost:3000/mensajes/likes/'+  like + '/' + no_like + '/' + id;
+      this.mensaje.like = like_envia;
+       this.mensaje.no_like = no_like_envia;
+       return this._Http.put(url,this.mensaje).pipe(map((resp:any)=>{
+         this.Array_iduser = resp.mensaje.likes;
+         for(let id in this.Array_iduser){
+           this.Array_iduser[id]
+           if(this.Array_iduser[id] == id_user){
+            console.log(this.Array_iduser[id])
+            break
+           }
+         }
+
+       }))
+     }else{
+       if(like == "no"){
+         console.log('entro en el no')
+         this.mensaje.like = like_envia;
+         this.mensaje.no_like = no_like_envia;      
+        let url = 'http://localhost:3000/mensajes/likes/'+  like + '/' + no_like + '/' + id;
+        return this._Http.put(url,this.mensaje).pipe(map((resp:any)=>{
+          console.log(resp)
+        }))
+       }
+     }
+
    }
 
   BucarMensajes(busqueda:string){
@@ -109,15 +163,7 @@ export class MensajesService {
     let url = 'http://localhost:3000/mensajes/mensaje/' + id;
     
     return this._Http.get(url).pipe(map((resp:any)=>{
-      this.mensaje = resp.mensaje;
-      setTimeout(()=>{
-        
-        $('#problema').click();
-        $('#descripcion').click();
-        $('#solucion').click();
-
-      },100)
-      console.log(resp.mensaje)
+      return resp.mensaje;
     }))
   }
 

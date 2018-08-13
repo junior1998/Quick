@@ -112,7 +112,7 @@
                 <div *ngIf="this._mensaje.Resultado_busqueda.length >= 1" class="interior_resultado">
 
                     <div class="carta" *ngFor="let resultado of this._mensaje.Resultado_busqueda">
-                        <div class="carta_interior">
+                        <div class="carta_interior" (click)="enviarAsolucion(resultado._id)">
                             <div class="Error">
                                 <div class="error_titulo">
                                     <span class="span_titulo">Problema:</span>

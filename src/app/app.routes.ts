@@ -14,7 +14,7 @@ const app_routes: Routes = [
         { path: 'inicio', component: InicioComponent,
           canActivate: [ProtegerRutasGuard,VerificarTokenGuard]
         },
-        { path: 'solucion', component: SolucionComponent,
+        { path: 'solucion/:id', component: SolucionComponent,
         canActivate: [ProtegerRutasGuard,VerificarTokenGuard]
         },
         { path: 'registrar-solucion', component: RegistrarSolucionComponent,
