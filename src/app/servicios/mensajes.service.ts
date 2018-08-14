@@ -22,6 +22,8 @@ export class MensajesService {
   Resultado_busqueda:any[]=[]
   mensajeCreado:any={}
   Array_iduser:any[]=[]
+  Array_iduserNolike:any[]=[]
+
   texto_boton = 'Guardar';
   constructor(
     public _Http:HttpClient,
@@ -39,33 +41,44 @@ export class MensajesService {
 
 
        return this._Http.get(url).pipe(map((resp:any)=>{
-        console.log(resp)
+         console.log(resp)
 
         this.Array_iduser = resp.mensaje[0].likes;
         for(let id in this.Array_iduser){
           this.Array_iduser[id]
           if(this.Array_iduser[id] == id_user){
-           return this.Array_iduser[id];
+           return 'arraylike';
+          }
+        }
+
+        this.Array_iduserNolike = resp.mensaje[0].no_megusta;
+        for(let id in this.Array_iduserNolike){
+          this.Array_iduserNolike[id]
+          if(this.Array_iduserNolike[id] == id_user){
+           return 'arraynolike';
           }
         }
        }))
    }
 
-   Likes_no_likes(like:string,no_like:string,id:string,no_like_envia:number,like_envia:number){
+
+   Likes_no_likes(like:string,no_like:string,id:string,no_like_envia:number,like_envia:number,click:string){
      if(like == "si"){
-      console.log('entro en el si')
         let id_user = localStorage.getItem('id');
-        this.Array_iduser.push(id_user);
+        if(click == 'poner'){
+          this.Array_iduser.push(id_user);
+        }
         this.mensaje.likes = this.Array_iduser;
        let url = 'http://localhost:3000/mensajes/likes/'+  like + '/' + no_like + '/' + id;
       this.mensaje.like = like_envia;
        this.mensaje.no_like = no_like_envia;
        return this._Http.put(url,this.mensaje).pipe(map((resp:any)=>{
+        console.log(resp)
+
          this.Array_iduser = resp.mensaje.likes;
          for(let id in this.Array_iduser){
            this.Array_iduser[id]
            if(this.Array_iduser[id] == id_user){
-            console.log(this.Array_iduser[id])
             break
            }
          }
@@ -75,10 +88,25 @@ export class MensajesService {
        if(like == "no"){
          console.log('entro en el no')
          this.mensaje.like = like_envia;
-         this.mensaje.no_like = no_like_envia;      
-        let url = 'http://localhost:3000/mensajes/likes/'+  like + '/' + no_like + '/' + id;
+         this.mensaje.no_like = no_like_envia;
+         this.mensaje.no_megusta = this.Array_iduserNolike;
+         let id_user = localStorage.getItem('id');
+           if(click == 'poner'){
+             this.Array_iduserNolike.push(id_user);
+           }
+                  //  this.Array_iduserNolike = resp.mensaje.likes;    
+        let url = 'http://localhost:3000/mensajes/no_megusta/'+  like + '/' + no_like + '/' + id;
         return this._Http.put(url,this.mensaje).pipe(map((resp:any)=>{
+          this.Array_iduserNolike = resp.mensaje.no_megusta;
           console.log(resp)
+
+         for(let id in this.Array_iduserNolike){
+           this.Array_iduserNolike[id]
+           if(this.Array_iduserNolike[id] == id_user){
+            console.log(resp)
+            break
+           }
+         }
         }))
        }
      }
