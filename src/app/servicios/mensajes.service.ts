@@ -24,94 +24,67 @@ export class MensajesService {
   Array_iduser:any[]=[]
   Array_iduserNolike:any[]=[]
 
+  barra:number = 0; 
+  like: number = 0;
+  no_like: number = 0;
+  resultado:number = 0;
+
+  estado_like:number = 1;
+  estado_nolike:number = 1;
+  id_mensaje:string;
+
   texto_boton = 'Guardar';
   constructor(
     public _Http:HttpClient,
     public _socketService:SocketService
   ) {
+
+   
     this._socketService.socket.on('mensajesEmitido',(elMensajeEmitido)=>{
-      this.mensajes = []
+      // this.mensajes = []
       this.mensajes = elMensajeEmitido.mensaje;
+      // console.log(this.mensaje)
+      // this.confirmarLikes(this.mensaje._id).subscribe()
+    })
+
+    this._socketService.socket.on('mensajesObjetoEmitido',(elMensajeEmitido)=>{
+     
+      
     })
    }
 
-   confirmarLikes(id:string){
-      let url = 'http://localhost:3000/mensajes/likes/' + id ;
-      let id_user = localStorage.getItem('id');
+  Identificar_lik_O_noLIke(like,no_like){
+    if(like == false && this.estado_like == 2){
+      $('.fa-thumbs-up').css('color','#747474');
+      this.estado_like = 1;
+      console.log(like + ' Cuando el estado del like es 2')
+      return;
+    }else if(no_like == false &&  this.estado_nolike == 2){
+      $('.fa-thumbs-down').css('color','#747474');
+      this.estado_nolike = 1;
+      console.log(no_like + ' Cuando el estado de nolike es 2')
+      return
+    }else if(like == true){
+      $('.fa-thumbs-up').css('color','red');
+      this.estado_like = 2;
+      console.log(this.estado_like)
+      return
+    }else if(no_like == true){
+      $('.fa-thumbs-down').css('color','red');
+      this.estado_nolike = 2;
+      console.log(this.estado_nolike)
+      return
+    }else if(like == false){
+      $('.fa-thumbs-down').css('color','#747474');
+      this.estado_like = 1;
+      console.log(this.estado_like)
+    }else if(no_like == false){
+      $('.fa-thumbs-up').css('color','#747474');
+      this.estado_nolike = 1;
+      console.log(no_like)
+    }
 
-
-       return this._Http.get(url).pipe(map((resp:any)=>{
-         console.log(resp)
-
-        this.Array_iduser = resp.mensaje[0].likes;
-        for(let id in this.Array_iduser){
-          this.Array_iduser[id]
-          if(this.Array_iduser[id] == id_user){
-           return 'arraylike';
-          }
-        }
-
-        this.Array_iduserNolike = resp.mensaje[0].no_megusta;
-        for(let id in this.Array_iduserNolike){
-          this.Array_iduserNolike[id]
-          if(this.Array_iduserNolike[id] == id_user){
-           return 'arraynolike';
-          }
-        }
-       }))
-   }
-
-
-   Likes_no_likes(like:string,no_like:string,id:string,no_like_envia:number,like_envia:number,click:string){
-     if(like == "si"){
-        let id_user = localStorage.getItem('id');
-        if(click == 'poner'){
-          this.Array_iduser.push(id_user);
-        }
-        this.mensaje.likes = this.Array_iduser;
-       let url = 'http://localhost:3000/mensajes/likes/'+  like + '/' + no_like + '/' + id;
-      this.mensaje.like = like_envia;
-       this.mensaje.no_like = no_like_envia;
-       return this._Http.put(url,this.mensaje).pipe(map((resp:any)=>{
-        console.log(resp)
-
-         this.Array_iduser = resp.mensaje.likes;
-         for(let id in this.Array_iduser){
-           this.Array_iduser[id]
-           if(this.Array_iduser[id] == id_user){
-            break
-           }
-         }
-
-       }))
-     }else{
-       if(like == "no"){
-         console.log('entro en el no')
-         this.mensaje.like = like_envia;
-         this.mensaje.no_like = no_like_envia;
-         this.mensaje.no_megusta = this.Array_iduserNolike;
-         let id_user = localStorage.getItem('id');
-           if(click == 'poner'){
-             this.Array_iduserNolike.push(id_user);
-           }
-                  //  this.Array_iduserNolike = resp.mensaje.likes;    
-        let url = 'http://localhost:3000/mensajes/no_megusta/'+  like + '/' + no_like + '/' + id;
-        return this._Http.put(url,this.mensaje).pipe(map((resp:any)=>{
-          this.Array_iduserNolike = resp.mensaje.no_megusta;
-          console.log(resp)
-
-         for(let id in this.Array_iduserNolike){
-           this.Array_iduserNolike[id]
-           if(this.Array_iduserNolike[id] == id_user){
-            console.log(resp)
-            break
-           }
-         }
-        }))
-       }
-     }
-
-   }
+  }
 
   BucarMensajes(busqueda:string){
     let url = 'http://localhost:3000/mensajes/buscar/' + busqueda;
@@ -182,8 +155,7 @@ export class MensajesService {
     let id = localStorage.getItem('id')
     let url = 'http://localhost:3000/mensajes';
     return this._Http.get(url).pipe(map((resp:any)=>{
-      this.mensajes = resp.mensaje;
-      console.log(this.mensajes)
+      return resp.mensaje;
     })) 
   }
 
