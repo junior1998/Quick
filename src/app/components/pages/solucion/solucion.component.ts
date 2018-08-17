@@ -11,8 +11,6 @@ declare var $;
 })
 export class SolucionComponent implements OnInit {
     
-  // like = false;
-  // no_like = false; 
 
   constructor(
     public  activatedRoute:ActivatedRoute,
@@ -102,8 +100,9 @@ export class SolucionComponent implements OnInit {
     })
   }
 
-  likes(like,no_like){
-    this._mensajesService.Identificar_lik_O_noLIke(like,no_like)
+  likes(opcion){
+    this._mensajesService.likes(opcion)
+    // this._mensajesService.Identificar_lik_O_noLIke(like,no_like)
   }
 
    

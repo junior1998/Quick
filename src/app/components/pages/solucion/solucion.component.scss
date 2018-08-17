@@ -157,12 +157,19 @@
                                 // display: flex;
                                 // justify-content: center;
                                 // align-items: center;
-                                .fa-thumbs-up {
+                                .likeNormal {
                                     margin-top: 5px;
                                     font-size: 23px;
                                     margin-right: 10px;
                                     cursor: pointer;
                                     color: #747474;
+                                }
+                                .likeActivo {
+                                    margin-top: 5px;
+                                    font-size: 23px;
+                                    margin-right: 10px;
+                                    cursor: pointer;
+                                    color: #007bff;
                                 }
                                 .numero_like {
                                     font-size: 10px;
@@ -175,12 +182,19 @@
                                 // background: rgb(68, 97, 141);
                                 float: left;
                                 padding-top: 5px;
-                                .fa-thumbs-down {
+                                .no_likeNormal {
                                     margin-top: 5px;
                                     font-size: 23px;
                                     margin-right: 10px;
                                     cursor: pointer;
-                                    color: rgb(116, 116, 116);
+                                    color: #747474;
+                                }
+                                .no_likeActivo {
+                                    margin-top: 5px;
+                                    font-size: 23px;
+                                    margin-right: 10px;
+                                    cursor: pointer;
+                                    color: #007bff;
                                 }
                                 .numero_like {
                                     font-size: 10px;
