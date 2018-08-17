@@ -11,8 +11,8 @@ declare var $;
 })
 export class SolucionComponent implements OnInit {
     
-  like = false;
-  no_like = false; 
+  // like = false;
+  // no_like = false; 
 
   constructor(
     public  activatedRoute:ActivatedRoute,
@@ -32,7 +32,10 @@ export class SolucionComponent implements OnInit {
   ngOnInit() {
     this._mensajesService.TraerMensaje(this.id).subscribe((resp:any)=>{
       this._mensajesService.mensaje = resp;
-      console.log(this._mensajesService.mensaje)
+      this._mensajesService.Array_iduser = this._mensajesService.mensaje.likes;
+      this._mensajesService.Array_iduserNolike = this._mensajesService.mensaje.no_megusta;
+      this._mensajesService.cargarLikes()
+
       // this._mensajesService.Array_iduser = this._mensajesService.mensaje.likes;
       // this.cargar_like()
       

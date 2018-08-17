@@ -44,12 +44,12 @@
                                 <div class="valoracion">
                                     <div class="likes">
                                         <div class="like">
-                                            <i (click)="likes(like = !like,no_like = false)" class="fas fa-thumbs-up"></i>
-                                            <span class="numero_like">{{this._mensajesService.like}}</span>
+                                            <i (click)="likes(1,'like')" class="fas fa-thumbs-up"></i>
+                                            <span class="numero_like">{{this._mensajesService.Array_iduser.length}}</span>
                                         </div>
                                         <div class="no-like">
-                                            <i id="no_like" (click)="likes(like = false,no_like = !no_like)" class="fas fa-thumbs-down"></i>
-                                            <span class="numero_like">{{this._mensajesService.no_like}}</span>
+                                            <i id="no_like" (click)="likes(2,'no_like')" class="fas fa-thumbs-down"></i>
+                                            <span class="numero_like">{{this._mensajesService.Array_iduserNolike.length}}</span>
 
                                         </div>
                                     </div>
