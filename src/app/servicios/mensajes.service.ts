@@ -177,8 +177,8 @@ export class MensajesService {
           this._socketService.socket.emit('MensajeObjeto',{
             mensajeActual: resp
           })
-          this.GuardarNo_LikeEnArray()
           this.like = false;
+          this.GuardarNo_LikeEnArray()
         })
         console.log(this.mensaje)
         return
@@ -227,8 +227,8 @@ export class MensajesService {
           this._socketService.socket.emit('MensajeObjeto',{
             mensajeActual: resp
           })
-          this.GuardarLikeEnArray()
           this.no_like = false;
+          this.GuardarLikeEnArray()
         })
         console.log(this.mensaje)
         return
