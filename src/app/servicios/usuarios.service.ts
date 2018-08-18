@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { SubirImagenService } from './subir-imagen.service';
+import { URL_SERVICIOS } from '../components/config/config';
 
 declare var $;
 
@@ -77,7 +78,7 @@ export class UsuariosService {
 
   CargarUsuarioID(){
     let id = localStorage.getItem('id');
-    let url = 'http://localhost:3000/usuarios/usuario/' + id;
+    let url = URL_SERVICIOS + 'usuarios/usuario/' + id;
     return this._http.get(url).pipe(map((resp:any)=>{
       return resp.usuario
     }))
@@ -125,7 +126,7 @@ export class UsuariosService {
   }
 
   CrearUsuario(){
-    let url = 'http://localhost:3000/usuarios';
+    let url = URL_SERVICIOS + 'usuarios';
     console.log(this.UsuarioObjeto)
    return this._http.post(url,this.UsuarioObjeto).pipe(map((resp:any)=>{
     this.UsuarioObjeto = {
@@ -149,7 +150,7 @@ export class UsuariosService {
     let token = localStorage.getItem('token')
     console.log(this.UsuarioObjeto)
 
-    let url = 'http://localhost:3000/usuarios/' + id + '/' + this.contra + '?token=' + token;
+    let url = URL_SERVICIOS + 'usuarios/' + id + '/' + this.contra + '?token=' + token;
  
     return this._http.put(url,this.UsuarioObjeto).pipe(map((resp:any)=>{
       return resp.usuario;
@@ -158,7 +159,7 @@ export class UsuariosService {
   }
 
   Iniciar(){
-    let url = 'http://localhost:3000/usuarios/login';
+    let url = URL_SERVICIOS + 'usuarios/login';
     return this._http.post(url,this.login).pipe(map((resp:any)=>{
       console.log(resp)
         localStorage.setItem('id', resp.usuario_id)
@@ -171,7 +172,7 @@ export class UsuariosService {
   }
 
   loginGoogle(token:string){
-    let url = 'http://localhost:3000/usuarios/google';
+    let url = URL_SERVICIOS + 'usuarios/google';
 
     return this._http.post(url,{token})
                .pipe(map((resp:any)=>{
@@ -189,7 +190,7 @@ export class UsuariosService {
 
   renuevaToken(){
     let token =  localStorage.getItem('token')
-    let url = 'http://localhost:3000/usuarios/renuevatoken?token=' + token;
+    let url = URL_SERVICIOS + 'usuarios/renuevatoken?token=' + token;
     return this._http.get(url).pipe(map((resp:any)=>{
       token = resp.token;
       localStorage.setItem('token', token)

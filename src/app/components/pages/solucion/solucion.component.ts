@@ -101,8 +101,15 @@ export class SolucionComponent implements OnInit {
   }
 
   likes(opcion){
+
+    this._mensajesService.en_proceso = true;
     this._mensajesService.likes(opcion)
-    // this._mensajesService.Identificar_lik_O_noLIke(like,no_like)
+    setTimeout(()=>{
+      if(this._mensajesService.en_proceso == true){
+        this._mensajesService.en_proceso = false
+      }
+    },5000)
+
   }
 
    

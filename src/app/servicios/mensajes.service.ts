@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, single } from 'rxjs/operators';
+import { map, single, refCount } from 'rxjs/operators';
 import swal from 'sweetalert2';
 import { SocketService } from './socket.service';
+import { URL_SERVICIOS } from '../components/config/config';
+
 
 declare var $;
 
@@ -25,7 +27,7 @@ export class MensajesService {
   Array_iduserNolike:any[]=[]
 
   barra:number = 0; 
-  like: boolean = false;
+  like: boolean = false ;
   no_like: boolean = false;
   resultado:number = 0;
 
@@ -34,6 +36,10 @@ export class MensajesService {
   id_mensaje:string;
 
   texto_boton = 'Guardar';
+
+  accion:string;
+  en_proceso: boolean = false;
+  
   constructor(
     public _Http:HttpClient,
     public _socketService:SocketService
@@ -48,16 +54,47 @@ export class MensajesService {
     })
 
     this._socketService.socket.on('mensajesObjetoEmitido',(elMensajeEmitido)=>{
-      console.log(elMensajeEmitido.mensaje.mensaje)
+      
+      console.log(elMensajeEmitido)
       this.mensaje = elMensajeEmitido.mensaje.mensaje;
       this.Array_iduser = this.mensaje.likes;
       this.Array_iduserNolike = this.mensaje.no_megusta;
-      // this.cargarLikes()
-      this.cancularBarra('like')
-      this.cancularBarraNolike('no_like')
+      
+      this.cargarLikes()
+      // this.cancularBarra('like')
+      // this.cancularBarraNolike('no_like')
     })
    
    }
+  //  cargarLikes1(){
+
+  //   if(this.Array_iduser.length == 0 && this.Array_iduserNolike.length == 0){
+  //     this.barra = 50;
+  //     return;
+  //   }
+  //   // this.cancularBarra('like')
+  //   let id = localStorage.getItem('id');
+  //   for(let idLike in this.Array_iduser){
+  //     if(this.Array_iduser[idLike] == id){
+  //       this.like = true;
+  //       console.log( 'estado like ' + this.like)
+  //       this.cancularBarra('like')
+  //       return
+  //     }
+  //   }
+    
+  //   // this.cancularBarraNolike('no_like')
+  //   for(let idNOLike in this.Array_iduserNolike){
+  //     if(this.Array_iduserNolike[idNOLike] == id){
+  //       this.no_like = true;
+  //       console.log( 'estado no_like ' + this.no_like)
+  //       this.cancularBarraNolike('no_like')
+  //       return
+  //     }
+  //   }
+
+    
+  // }
   
   cargarLikes(){
 
@@ -70,47 +107,42 @@ export class MensajesService {
     for(let idLike in this.Array_iduser){
       if(this.Array_iduser[idLike] == id){
         this.like = true;
-        console.log(this.like)
-        this.cancularBarra('like')
-        return
+        console.log( 'estado like ' + this.like)
+        break
       }
     }
+    this.cancularBarra('like')
     
     // this.cancularBarraNolike('no_like')
     for(let idNOLike in this.Array_iduserNolike){
       if(this.Array_iduserNolike[idNOLike] == id){
         this.no_like = true;
-        console.log(this.no_like)
-        this.cancularBarraNolike('no_like')
-        return
+        console.log( 'estado no_like ' + this.no_like)
+        break
       }
     }
+    this.cancularBarraNolike('no_like')
 
     
   }
   
   cancularBarra(like:string){
-    console.log(this.barra)
     if(like == 'like'){
       this.resultado = this.Array_iduser.length + this.Array_iduserNolike.length;
       this.barra = this.Array_iduser.length / this.resultado  * 100;
-      console.log(this.barra)
       if(this.Array_iduser.length == 0 && this.Array_iduserNolike.length == 0){
         this.barra = 50;
       }
-      console.log(this.barra)
     }
   }
 
   cancularBarraNolike(like:string){
-    console.log(this.barra)
     if(this.Array_iduserNolike.length == 0){
       return;
     }
     if(like == 'no_like'){
       this.resultado = this.Array_iduser.length + this.Array_iduserNolike.length;
       this.barra = this.Array_iduserNolike.length / this.resultado  * 100;
-      console.log(this.barra)
       if(this.Array_iduser.length == 0 && this.Array_iduserNolike.length == 0){
         this.barra = 50;
       }else if(this.Array_iduser.length == 0 && this.Array_iduserNolike.length >= 1){
@@ -121,7 +153,7 @@ export class MensajesService {
 
 
   GuardarLikes(like:string,no_like:string){
-    let url = 'http://localhost:3000/mensajes/likes/'+ like + '/' + no_like + '/' + this.mensaje._id;
+    let url = URL_SERVICIOS + 'mensajes/likes/'+ like + '/' + no_like + '/' + this.mensaje._id;
     return this._Http.put(url,this.Array_iduser).pipe(map((resp:any)=>{
       return resp;
       
@@ -129,7 +161,7 @@ export class MensajesService {
   }
 
   GuardarNo_Likes(like:string,no_like:string){
-    let url = 'http://localhost:3000/mensajes/likes/'+ like + '/' + no_like + '/' + this.mensaje._id;
+    let url = URL_SERVICIOS  + 'mensajes/likes/'+ like + '/' + no_like + '/' + this.mensaje._id;
     return this._Http.put(url,this.Array_iduserNolike).pipe(map((resp:any)=>{
       return resp;
     }))
@@ -137,15 +169,38 @@ export class MensajesService {
 
   GuardarLikeEnArray(){
     let id = localStorage.getItem('id')
+    if(this.Array_iduser.indexOf(id) > 0){
+      return;
+    }
     this.Array_iduser.push(id)
     for(let idCli in this.Array_iduser){
       if(this.Array_iduser[idCli] == id){
-        console.log(this.Array_iduser[idCli])
         // this.GuardarLikes('likes','no').subscribe()
-        this.GuardarLikes('likes','no').subscribe((resp:any)=>{
+        this.GuardarLikes('likes','no').subscribe(((resp:any)=>{
+          setTimeout(()=>{
+            console.log('entro en la condicion que existe el like en el array no like')
+                this.QuitarNo_LikeEnArray()
+              },3000)
+          
           this._socketService.socket.emit('MensajeObjeto',{
             mensajeActual: resp
           })
+          setTimeout(()=>{
+
+            if(this.like == true && this.no_like == true){
+              this.like = false;
+              this.no_like = false;
+              this.accion == 'like'? this.like = true: this.no_like = true;
+            }
+
+            this.en_proceso = false;
+          },500)
+        }),error=>{
+
+            this.like = false;
+            this.no_like = false;
+            this.likes(this.accion)
+
         })
         return
       }
@@ -156,12 +211,28 @@ export class MensajesService {
     let id = localStorage.getItem('id')
     for(let idCli in this.Array_iduser){
       if(this.Array_iduser[idCli] == id){
-        this.Array_iduser.splice(this.Array_iduser[idCli],1)
-        console.log(this.mensaje)
-        this.GuardarLikes('likes','no').subscribe((resp:any)=>{
+        
+        this.Array_iduser.splice(parseInt(idCli),1)
+        this.GuardarLikes('likes','no').subscribe(((resp:any)=>{
           this._socketService.socket.emit('MensajeObjeto',{
             mensajeActual: resp
           })
+          setTimeout(()=>{
+
+      if(this.like == true && this.no_like == true){
+        this.like = false;
+        this.no_like = false;
+        this.accion == 'like'? this.like = true: this.no_like = true;
+      }      
+
+            this.en_proceso = false;
+          },500)
+        }),error =>{
+
+            this.like = false;
+            this.no_like = false;
+            this.likes(this.accion)
+
         })
         return
       }
@@ -170,17 +241,41 @@ export class MensajesService {
 
   QuitarLikeEnArray1(){
     let id = localStorage.getItem('id')
+    
     for(let idCli in this.Array_iduser){
       if(this.Array_iduser[idCli] == id){
-        this.Array_iduser.splice(this.Array_iduser[idCli],1)
-        this.GuardarLikes('likes','no').subscribe((resp:any)=>{
+        this.Array_iduser.splice(parseInt(idCli),1)
+        // this.no_like = !this.like;
+        // this.no_like? this.like = false: this.like = true;
+        this.GuardarLikes('likes','no').subscribe(((resp:any)=>{
           this._socketService.socket.emit('MensajeObjeto',{
             mensajeActual: resp
           })
-          this.like = false;
           this.GuardarNo_LikeEnArray()
+          setTimeout(()=>{
+
+      if(this.like == true && this.no_like == true){
+        this.like = false;
+        this.no_like = false;
+        this.accion == 'like'? this.like = true: this.no_like = true;
+      }
+            this.en_proceso = false;
+
+          },500)
+        }),error=>{
+
+            // let id = localStorage.getItem('id');
+                while(this.Array_iduser.indexOf(id) > 0){
+                  this.Array_iduser.splice(this.Array_iduser.indexOf(id),1)
+                }
+              
+            
+
+            this.like = false;
+            this.no_like = false;
+            this.likes(this.accion)
+
         })
-        console.log(this.mensaje)
         return
       }
     }
@@ -188,14 +283,39 @@ export class MensajesService {
 
   GuardarNo_LikeEnArray(){
     let id = localStorage.getItem('id')
+    if(this.Array_iduserNolike.indexOf(id) > 0){
+      return;
+    }
     this.Array_iduserNolike.push(id)
     for(let idCli in this.Array_iduserNolike){
       if(this.Array_iduserNolike[idCli] == id){
-        console.log(this.Array_iduserNolike[idCli])
-        this.GuardarNo_Likes('no','no_like').subscribe((resp:any)=>{
+
+        this.GuardarNo_Likes('no','no_like').subscribe(((resp:any)=>{
+          
+              setTimeout(()=>{
+                console.log('entro en la condicion que existe el like en el array like')
+                this.QuitarLikeEnArray()
+              },2000)
+      
           this._socketService.socket.emit('MensajeObjeto',{
             mensajeActual: resp
           })
+          setTimeout(()=>{
+
+      if(this.like == true && this.no_like == true){
+        this.like = false;
+        this.no_like = false;
+        this.accion == 'like'? this.like = true: this.no_like = true;
+      }
+            this.en_proceso = false;
+
+          },500)
+        }),error=>{
+
+            this.like = false;
+            this.no_like = false;
+            this.likes(this.accion)
+
         })
         return
       }
@@ -206,12 +326,27 @@ export class MensajesService {
     let id = localStorage.getItem('id')
     for(let idCli in this.Array_iduserNolike){
       if(this.Array_iduserNolike[idCli] == id){
-        this.Array_iduserNolike.splice(this.Array_iduserNolike[idCli],1)
-        console.log(this.mensaje)
-        this.GuardarNo_Likes('no','no_like').subscribe((resp:any)=>{
+        this.Array_iduserNolike.splice(parseInt(idCli),1)
+        this.GuardarNo_Likes('no','no_like').subscribe(((resp:any)=>{
           this._socketService.socket.emit('MensajeObjeto',{
             mensajeActual: resp
           })
+          setTimeout(()=>{
+
+      if(this.like == true && this.no_like == true){
+        this.like = false;
+        this.no_like = false;
+        this.accion == 'like'? this.like = true: this.no_like = true;
+      }
+            this.en_proceso = false;
+
+          },500)
+        }),error =>{
+
+            this.like = false;
+            this.no_like = false;
+            this.likes(this.accion)
+
         })
         return
       }
@@ -219,18 +354,39 @@ export class MensajesService {
   }
 
   QuitarNo_LikeEnArray1(){
+    
     let id = localStorage.getItem('id')
     for(let idCli in this.Array_iduserNolike){
       if(this.Array_iduserNolike[idCli] == id){
-        this.Array_iduserNolike.splice(this.Array_iduserNolike[idCli],1)
-        this.GuardarNo_Likes('no','no_like').subscribe((resp:any)=>{
+        this.Array_iduserNolike.splice(parseInt(idCli),1)
+        // this.like = !this.no_like;
+        // this.like? this.no_like = false: this.no_like = true;
+        this.GuardarNo_Likes('no','no_like').subscribe(((resp:any)=>{
           this._socketService.socket.emit('MensajeObjeto',{
             mensajeActual: resp
           })
-          this.no_like = false;
+          setTimeout(()=>{
+
+      if(this.like == true && this.no_like == true){
+        this.like = false;
+        this.no_like = false;
+        this.accion == 'like'? this.like = true: this.no_like = true;
+      }
+            this.en_proceso = false;
+
+          },500)
           this.GuardarLikeEnArray()
+        }),error =>{
+
+            while(this.Array_iduserNolike.indexOf(id) > 0){
+              this.Array_iduserNolike.splice(this.Array_iduserNolike.indexOf(id),1)
+            }
+
+            this.like = false;
+            this.no_like = false;
+            this.likes(this.accion)
+
         })
-        console.log(this.mensaje)
         return
       }
     }
@@ -239,28 +395,36 @@ export class MensajesService {
 
 
   likes(opcion:string){
-    console.log(opcion,this.like,this.no_like)
     if(opcion == 'like' && !this.no_like){
+        this.accion = 'like';
         this.like = !this.like;
-        console.log(this.like)
         this.like? this.GuardarLikeEnArray() : this.QuitarLikeEnArray(); 
         // this.GuardarLikes('likes','no').subscribe()
         return
     }else if(opcion == 'no_like' && !this.like ){
+        this.accion = 'no_like';
         this.no_like = !this.no_like;
-        console.log(this.no_like)
         this.no_like? this.GuardarNo_LikeEnArray() : this.QuitarNo_LikeEnArray();
         // this.GuardarNo_Likes('no','no_like').subscribe()
         return
     }else{
-      this.like = !this.like;
-      console.log(this.like)
-      this.like? this.QuitarNo_LikeEnArray1():
+      if(this.no_like == true){
+        this.accion = 'like';
+        this.QuitarNo_LikeEnArray1()
+        this.no_like = false;
+        this.like = true;
+      }else if(this.like == true){
+        this.accion = 'no_like';
+        this.QuitarLikeEnArray1()
+        this.like = false;
+        this.no_like = true;
+      }
+      // this.like? this.QuitarNo_LikeEnArray1():
+      // this.like = !this.like;
       // this.GuardarLikes('likes','no').subscribe()
-      this.no_like = !this.no_like;
-      this.no_like? this.QuitarLikeEnArray1(): 
+      // this.no_like? this.QuitarLikeEnArray1(): 
+      // this.no_like = !this.no_like;
       // this.GuardarNo_Likes('no','no_like').subscribe()
-        console.log(this.no_like)
     }
   }
 
@@ -362,7 +526,7 @@ export class MensajesService {
   // }
 
   BucarMensajes(busqueda:string){
-    let url = 'http://localhost:3000/mensajes/buscar/' + busqueda;
+    let url = URL_SERVICIOS + 'mensajes/buscar/' + busqueda;
 
     return this._Http.get(url).pipe(map((resp:any)=>{
       this.Resultado_busqueda = resp.mensaje;
@@ -379,7 +543,7 @@ export class MensajesService {
 
     this.mensaje.hecho_id = id;
     this.mensaje.hecho_objeto = id_on;
-    let url = 'http://localhost:3000/mensajes/';
+    let url = URL_SERVICIOS + 'mensajes/';
 
 
     return this._Http.post(url,this.mensaje).pipe(map((resp:any)=>{
@@ -393,6 +557,9 @@ export class MensajesService {
         this._socketService.socket.emit('mensajeDB',{
           mensajeActual: resp
         })
+        setTimeout(()=>{
+          this.en_proceso = false;
+        },500)
       })
       this.mensaje = {
         "nombre_error":"",
@@ -428,14 +595,14 @@ export class MensajesService {
 
   traerTodosLosMensajes(){
     let id = localStorage.getItem('id')
-    let url = 'http://localhost:3000/mensajes';
+    let url = URL_SERVICIOS + 'mensajes';
     return this._Http.get(url).pipe(map((resp:any)=>{
       return resp.mensaje;
     })) 
   }
 
   TraerMensaje(id:string){
-    let url = 'http://localhost:3000/mensajes/mensaje/' + id;
+    let url = URL_SERVICIOS + 'mensajes/mensaje/' + id;
     
     return this._Http.get(url).pipe(map((resp:any)=>{
       return resp.mensaje;
@@ -444,7 +611,7 @@ export class MensajesService {
 
   TraerMensajeConId(){
     let id = localStorage.getItem('id');
-    let url = 'http://localhost:3000/mensajes/' + id;
+    let url = URL_SERVICIOS + 'mensajes/' + id;
     
     return this._Http.get(url).pipe(map((resp:any)=>{
        return resp.mensaje;
@@ -454,13 +621,16 @@ export class MensajesService {
 
 
   ActualizarMensaje(){
-    let url = 'http://localhost:3000/mensajes/' + this.mensaje._id;
+    let url = URL_SERVICIOS + 'mensajes/' + this.mensaje._id;
     return this._Http.put(url,this.mensaje).pipe(map((resp:any)=>{
       this.TraerMensajeConId().subscribe((resp:any)=>{
         console.log(resp)
         this._socketService.socket.emit('mensajeDB',{
           mensajeActual: resp
         })
+        setTimeout(()=>{
+          this.en_proceso = false;
+        },500)
       })
       
       swal(
@@ -481,7 +651,7 @@ export class MensajesService {
   }
 
   BorrarMensaje(id:string){
-    let url = 'http://localhost:3000/mensajes/borrar/' + id;
+    let url = URL_SERVICIOS + 'mensajes/borrar/' + id;
 
     return this._Http.put(url,this.mensaje).pipe(map((resp:any)=>{
       console.log(resp)
@@ -511,6 +681,9 @@ export class MensajesService {
             this._socketService.socket.emit('mensajeDB',{
               mensajeActual: resp
             })
+            setTimeout(()=>{
+              this.en_proceso = false;
+            },500)
           })
         } else if (
           // Read more about handling dismissals

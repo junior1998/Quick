@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-
+import { URL_SERVICIOS } from '../components/config/config';
 @Injectable({
   providedIn: 'root'
 })
@@ -7,7 +7,7 @@ export class SubirImagenService {
 
   constructor() { }
 
-  URL_SERVICIOS = "http://localhost:3000";
+  URL_SERVICIOS
 
 
 
