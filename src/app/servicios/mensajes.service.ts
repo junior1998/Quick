@@ -52,48 +52,39 @@ export class MensajesService {
       this.mensaje = elMensajeEmitido.mensaje.mensaje;
       this.Array_iduser = this.mensaje.likes;
       this.Array_iduserNolike = this.mensaje.no_megusta;
+      // this.cargarLikes()
       this.cancularBarra('like')
       this.cancularBarraNolike('no_like')
     })
    
    }
-
-  //  agregarLikeQuitarYmover(valor:number,accion?:string){
-  //   if(valor == 1){
-  //     console.log('Agregando a los likes')
-  //   }else if(valor == 2){
-  //     console.log('Agregando a los no like')
-  //   }else if(valor == 3){
-
-  //     if(accion == 'quitar_like'){
-  //       console.log('quitando el id del usuario del ArrayLikeId')
-  //     }else if(accion == 'quitar_nolike'){
-  //       console.log('quitando el id del usuario del ArrayNoLikeId')
-  //     }
-  //   }
-  //  }
   
   cargarLikes(){
+
+    if(this.Array_iduser.length == 0 && this.Array_iduserNolike.length == 0){
+      this.barra = 50;
+      return;
+    }
     // this.cancularBarra('like')
     let id = localStorage.getItem('id');
     for(let idLike in this.Array_iduser){
       if(this.Array_iduser[idLike] == id){
         this.like = true;
         console.log(this.like)
-        break
+        this.cancularBarra('like')
+        return
       }
     }
-    this.cancularBarra('like')
     
     // this.cancularBarraNolike('no_like')
     for(let idNOLike in this.Array_iduserNolike){
       if(this.Array_iduserNolike[idNOLike] == id){
         this.no_like = true;
         console.log(this.no_like)
-        break
+        this.cancularBarraNolike('no_like')
+        return
       }
     }
-    this.cancularBarraNolike('no_like')
 
     
   }
@@ -113,6 +104,9 @@ export class MensajesService {
 
   cancularBarraNolike(like:string){
     console.log(this.barra)
+    if(this.Array_iduserNolike.length == 0){
+      return;
+    }
     if(like == 'no_like'){
       this.resultado = this.Array_iduser.length + this.Array_iduserNolike.length;
       this.barra = this.Array_iduserNolike.length / this.resultado  * 100;

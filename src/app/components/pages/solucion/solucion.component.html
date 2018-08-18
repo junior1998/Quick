@@ -48,7 +48,7 @@
                                             <span class="numero_like">{{this._mensajesService.Array_iduser.length}}</span>
                                         </div>
                                         <div class="no-like">
-                                            <i id="no_like" (click)="likes('no_like')" [ngClass]="{no_likeActivo:this._mensajesService.no_like}" class="fas fa-thumbs-down no_likeNormal"></i>
+                                            <i (click)="likes('no_like')" [ngClass]="{no_likeActivo:this._mensajesService.no_like}" class="fas fa-thumbs-down no_likeNormal"></i>
                                             <span class="numero_like">{{this._mensajesService.Array_iduserNolike.length}}</span>
 
                                         </div>
