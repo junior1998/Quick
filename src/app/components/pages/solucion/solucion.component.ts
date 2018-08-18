@@ -102,15 +102,12 @@ export class SolucionComponent implements OnInit {
 
   likes(opcion){
 
-    this._mensajesService.en_proceso = true;
-    this._mensajesService.likes(opcion)
-    setTimeout(()=>{
-      if(this._mensajesService.en_proceso == true){
-        this._mensajesService.en_proceso = false
-      }
-    },5000)
+      this._mensajesService.likes(opcion)
+    
 
   }
+
+  
 
    
 
