@@ -5,7 +5,7 @@ import * as socketIo from 'socket.io-client';
   providedIn: 'root'
 })
 export class SocketService {
-  socket = socketIo('http://192.168.1.19:5000')
+  socket = socketIo('http://10.0.0.4:5000')
   constructor() { 
 
   }

@@ -46,16 +46,22 @@ export class MensajesService {
   estado_like:number = 1;
   estado_nolike:number = 1;
   id_mensaje:string;
-
   texto_boton = 'Guardar';
-
   accion:string;
   en_proceso: boolean = false;
+  ventana_ancho:number;
+  ventana_alto:number;
   
   constructor(
     public _Http:HttpClient,
     public _socketService:SocketService
   ) {
+
+    $(document).ready(()=>{
+      this.ventana_ancho = $(window).width();
+      this.ventana_alto = $(window).height();
+      console.log(this.ventana_ancho,this.ventana_alto)
+    });
 
     
     this._socketService.socket.on('mensajesEmitido',(elMensajeEmitido)=>{
@@ -66,12 +72,12 @@ export class MensajesService {
     })
 
     this._socketService.socket.on('mensajesObjetoEmitido',(elMensajeEmitido)=>{
-      if(this.en_proceso == false){
-        console.log(elMensajeEmitido)
+      if(this.en_proceso == false && this.ventana_ancho >= 770){
         this.mensaje = elMensajeEmitido.mensaje.mensaje;
+        console.log(elMensajeEmitido)
         this.Array_iduser = this.mensaje.likes;
         this.Array_iduserNolike = this.mensaje.no_megusta;
-        this.cargarLikes()
+        this.cargarLikes1()
       }
       // this.cancularBarra('like')
       // this.cancularBarraNolike('no_like')
@@ -79,10 +85,19 @@ export class MensajesService {
    
    }
 
+   
+
    continuasocket(){
+     console.log('entro en continua socket')
      this.en_proceso = false;
-     this.cargarLikes()
-     console.log(this.mensaje)
+     this.TraerMensaje(this.id_mensaje).subscribe((resp:any)=>{
+      this.mensaje = resp;
+      this.Array_iduser = this.mensaje.likes;
+      this.Array_iduserNolike = this.mensaje.no_megusta;
+      this.cargarLikes1()
+       console.log(resp)
+     })
+
    }
 
 
@@ -105,7 +120,6 @@ export class MensajesService {
         }
       }
       this.cancularBarra('like')
-      console.log(this.Array_iduser.length, this.Array_iduserNolike.length )
     
     // this.cancularBarraNolike('no_like')
     for(let idNOLike in this.Array_iduserNolike){
@@ -121,7 +135,6 @@ export class MensajesService {
   }
   
   cargarLikes(){
-
     if(this.Array_iduser.length == 0 && this.Array_iduserNolike.length == 0){
       this.barra = 50;
       return;
@@ -151,12 +164,14 @@ export class MensajesService {
   }
   
   cancularBarra(like:string){
+    console.log('se ejecuto cargar likes')
     if(like == 'like'){
       this.resultado = this.Array_iduser.length + this.Array_iduserNolike.length;
       this.barra = this.Array_iduser.length / this.resultado  * 100;
       if(this.Array_iduser.length == 0 && this.Array_iduserNolike.length == 0){
         this.barra = 50;
       }
+      console.log(this.barra,this.resultado)
     }
   }
 
@@ -172,6 +187,7 @@ export class MensajesService {
       }else if(this.Array_iduser.length == 0 && this.Array_iduserNolike.length >= 1){
         this.barra = 0;
       }
+      console.log(this.barra,this.resultado)
     }
   }
 
@@ -201,7 +217,7 @@ export class MensajesService {
       if(this.Array_iduser[idCli] == id){
         // this.GuardarLikes('likes','no').subscribe()
         this.GuardarLikes('likes','no').subscribe(((resp:any)=>{
-          this.cargarLikes()
+          this.cargarLikes1()
 
           this._socketService.socket.emit('MensajeObjeto',{
             mensajeActual: resp
@@ -222,7 +238,7 @@ export class MensajesService {
         
         this.Array_iduser.splice(parseInt(idCli),1)
         this.GuardarLikes('likes','no').subscribe(((resp:any)=>{
-          this.cargarLikes()
+          this.cargarLikes1()
           this._socketService.socket.emit('MensajeObjeto',{
             mensajeActual: resp
           })
@@ -243,7 +259,7 @@ export class MensajesService {
         // this.no_like = !this.like;
         // this.no_like? this.like = false: this.like = true;
         this.GuardarLikes('likes','no').subscribe(((resp:any)=>{
-          this.cargarLikes()
+          this.cargarLikes1()
 
           this._socketService.socket.emit('MensajeObjeto',{
             mensajeActual: resp
@@ -268,7 +284,7 @@ export class MensajesService {
       if(this.Array_iduserNolike[idCli] == id){
 
         this.GuardarNo_Likes('no','no_like').subscribe(((resp:any)=>{
-          this.cargarLikes()
+          this.cargarLikes1()
 
           this._socketService.socket.emit('MensajeObjeto',{
             mensajeActual: resp
@@ -288,7 +304,7 @@ export class MensajesService {
       if(this.Array_iduserNolike[idCli] == id){
         this.Array_iduserNolike.splice(parseInt(idCli),1)
         this.GuardarNo_Likes('no','no_like').subscribe(((resp:any)=>{
-          this.cargarLikes()
+          this.cargarLikes1()
 
           this._socketService.socket.emit('MensajeObjeto',{
             mensajeActual: resp
@@ -312,7 +328,7 @@ export class MensajesService {
         // this.like = !this.no_like;
         // this.like? this.no_like = false: this.no_like = true;
         this.GuardarNo_Likes('no','no_like').subscribe(((resp:any)=>{
-          this.cargarLikes()
+          this.cargarLikes1()
 
           this._socketService.socket.emit('MensajeObjeto',{
             mensajeActual: resp

@@ -3,6 +3,7 @@ import { UsuariosService } from '../../../servicios/usuarios.service';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2';
 import { SocketService } from '../../../servicios/socket.service';
+import { MensajesService } from '../../../servicios/mensajes.service';
 
 declare var $;
 
@@ -25,7 +26,8 @@ export class InicioComponent implements OnInit {
   constructor(
     public _UsuarioService:UsuariosService,
     public router:Router,
-    public socket:SocketService
+    public socket:SocketService,
+    public _ServicioMensaje:MensajesService
   ) { }
 
 
@@ -670,6 +672,14 @@ export class InicioComponent implements OnInit {
       
     }
   }
+
+  enviarAsolucion(id:string){
+    this.router.navigate(['/pages/solucion',id])
+    }
+
+    buscarSolucion(busqueda:string){
+      this._ServicioMensaje.BucarMensajes(busqueda).subscribe()
+    }
 
  
 

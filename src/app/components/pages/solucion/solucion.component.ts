@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MensajesService } from '../../../servicios/mensajes.service';
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
+
 
 declare var $;
 @Component({
@@ -10,11 +12,12 @@ declare var $;
   styleUrls: ['./solucion.component.scss']
 })
 export class SolucionComponent implements OnInit {
-    
+  
 
   constructor(
     public  activatedRoute:ActivatedRoute,
-    public _mensajesService:MensajesService
+    public _mensajesService:MensajesService,
+    public router:Router
   ) {
     activatedRoute.params
     .subscribe( params => {
@@ -28,11 +31,13 @@ export class SolucionComponent implements OnInit {
   id;
 
   ngOnInit() {
+      
+
     this._mensajesService.TraerMensaje(this.id).subscribe((resp:any)=>{
       this._mensajesService.mensaje = resp;
       this._mensajesService.Array_iduser = this._mensajesService.mensaje.likes;
       this._mensajesService.Array_iduserNolike = this._mensajesService.mensaje.no_megusta;
-      this._mensajesService.cargarLikes()
+      this._mensajesService.cargarLikes1()
 
       // this._mensajesService.Array_iduser = this._mensajesService.mensaje.likes;
       // this.cargar_like()
@@ -101,11 +106,30 @@ export class SolucionComponent implements OnInit {
   }
 
   likes(opcion){
-
       this._mensajesService.likes(opcion)
-    
-
   }
+
+  buscarSolucion(busqueda:string){
+    this._mensajesService.BucarMensajes(busqueda).subscribe()
+  }
+
+  enviarAsolucion(id:string){
+    this.router.navigate(['/pages/solucion',id])
+    this._mensajesService.TraerMensaje(this.id).subscribe((resp:any)=>{
+      console.log(resp)
+      this._mensajesService.mensaje = resp;
+      this._mensajesService.Array_iduser = this._mensajesService.mensaje.likes;
+      this._mensajesService.Array_iduserNolike = this._mensajesService.mensaje.no_megusta;
+      this._mensajesService.cargarLikes1()
+
+      // this._mensajesService.Array_iduser = this._mensajesService.mensaje.likes;
+      // this.cargar_like()
+      
+    })
+    }
+    goBack(){
+      window.history.back();
+    }
 
   
 

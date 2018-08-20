@@ -1,1 +1,1 @@
-export const URL_SERVICIOS = 'http://192.168.1.19:3000/';
+export const URL_SERVICIOS = 'http://10.0.0.4:3000/';
