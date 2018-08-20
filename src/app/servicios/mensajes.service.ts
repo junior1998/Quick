@@ -60,7 +60,6 @@ export class MensajesService {
     $(document).ready(()=>{
       this.ventana_ancho = $(window).width();
       this.ventana_alto = $(window).height();
-      console.log(this.ventana_ancho,this.ventana_alto)
     });
 
     
@@ -74,7 +73,6 @@ export class MensajesService {
     this._socketService.socket.on('mensajesObjetoEmitido',(elMensajeEmitido)=>{
       if(this.en_proceso == false && this.ventana_ancho >= 770){
         this.mensaje = elMensajeEmitido.mensaje.mensaje;
-        console.log(elMensajeEmitido)
         this.Array_iduser = this.mensaje.likes;
         this.Array_iduserNolike = this.mensaje.no_megusta;
         this.cargarLikes1()
@@ -88,14 +86,12 @@ export class MensajesService {
    
 
    continuasocket(){
-     console.log('entro en continua socket')
      this.en_proceso = false;
      this.TraerMensaje(this.id_mensaje).subscribe((resp:any)=>{
       this.mensaje = resp;
       this.Array_iduser = this.mensaje.likes;
       this.Array_iduserNolike = this.mensaje.no_megusta;
       this.cargarLikes1()
-       console.log(resp)
      })
 
    }
@@ -115,7 +111,6 @@ export class MensajesService {
       for(let idLike in this.Array_iduser){
         if(this.Array_iduser[idLike] == id){
           this.like = true;
-          console.log( 'estado like ' + this.like)
           break
         }
       }
@@ -125,7 +120,6 @@ export class MensajesService {
     for(let idNOLike in this.Array_iduserNolike){
       if(this.Array_iduserNolike[idNOLike] == id){
         this.no_like = true;
-        console.log( 'estado no_like ' + this.no_like)
         break
       }
     }
@@ -144,7 +138,6 @@ export class MensajesService {
     for(let idLike in this.Array_iduser){
       if(this.Array_iduser[idLike] == id){
         this.like = true;
-        console.log( 'estado like ' + this.like)
         this.cancularBarra('like')
         return
       }
@@ -154,7 +147,6 @@ export class MensajesService {
     for(let idNOLike in this.Array_iduserNolike){
       if(this.Array_iduserNolike[idNOLike] == id){
         this.no_like = true;
-        console.log( 'estado no_like ' + this.no_like)
         this.cancularBarraNolike('no_like')
         return
       }
@@ -164,14 +156,12 @@ export class MensajesService {
   }
   
   cancularBarra(like:string){
-    console.log('se ejecuto cargar likes')
     if(like == 'like'){
       this.resultado = this.Array_iduser.length + this.Array_iduserNolike.length;
       this.barra = this.Array_iduser.length / this.resultado  * 100;
       if(this.Array_iduser.length == 0 && this.Array_iduserNolike.length == 0){
         this.barra = 50;
       }
-      console.log(this.barra,this.resultado)
     }
   }
 
@@ -187,7 +177,6 @@ export class MensajesService {
       }else if(this.Array_iduser.length == 0 && this.Array_iduserNolike.length >= 1){
         this.barra = 0;
       }
-      console.log(this.barra,this.resultado)
     }
   }
 
@@ -348,12 +337,10 @@ export class MensajesService {
     if(opcion == 'like' && !this.no_like){
         this.like = !this.like;
         this.like? this.GuardarLikeEnArray() : this.QuitarLikeEnArray(); 
-        // this.GuardarLikes('likes','no').subscribe()
         return
     }else if(opcion == 'no_like' && !this.like ){
         this.no_like = !this.no_like;
         this.no_like? this.GuardarNo_LikeEnArray() : this.QuitarNo_LikeEnArray();
-        // this.GuardarNo_Likes('no','no_like').subscribe()
         return
     }else{
       if(this.no_like == true){
@@ -365,118 +352,20 @@ export class MensajesService {
         this.like = false;
         this.no_like = true;
       }
-      // this.like? this.QuitarNo_LikeEnArray1():
-      // this.like = !this.like;
-      // this.GuardarLikes('likes','no').subscribe()
-      // this.no_like? this.QuitarLikeEnArray1(): 
-      // this.no_like = !this.no_like;
-      // this.GuardarNo_Likes('no','no_like').subscribe()
+      
     }
   }
 
 
 
 
-  // Identificar_lik_O_noLIke(like,no_like){
-  //   if(like == 1){
-
-  //     if(this.estado_like == 2){
-  //       $('.fa-thumbs-up').css('color','gray');
-  //       let id = localStorage.getItem('id')
-  //       for(let idLike in this.Array_iduser){
-  //         if(this.Array_iduser[idLike] == id){
-
-  //           this.Array_iduser.splice(this.Array_iduser[idLike],1)
-  //           this.mensaje.likes = this.Array_iduser;
-            
-  //           this.GuardarLikes('si','no').subscribe()
-
-  //           break
-  //         }
-  //       }
-  //       this.estado_like = 1;
-  //       return
-  //     }
-
-  //     if(this.estado_nolike == 2){
-  //       $('.fa-thumbs-down').css('color','gray');
-  //       this.estado_nolike = 1;
-  //       let id = localStorage.getItem('id');
-  //       for(let idLike in this.Array_iduserNolike){
-  //         if(this.Array_iduserNolike[idLike] == id){
-
-  //           this.Array_iduserNolike.splice(this.Array_iduserNolike[idLike],1)
-  //           this.mensaje.likes = this.Array_iduserNolike;
-  //           console.log(this.mensaje)
-
-  //           this.GuardarLikes('no','si').subscribe()
-  //           break
-  //         }
-  //       }
-  //       console.log('contar barra ejecutada por segunda ves')
-  //     }
-      
-  //     setTimeout(()=>{
-  //       let id = localStorage.getItem('id')
-  //       this.Array_iduser.push(id)
-  //       this.mensaje.likes = this.Array_iduser;
-  //       this.GuardarLikes('si','no').subscribe()
-        
-  //         this.estado_like = 2;
-  //     },200)
-
-  //       return
-  //   }else if(like == 2){
-
-  //     if(this.estado_nolike == 2){
-  //       $('.fa-thumbs-down').css('color','gray');
-  //       this.estado_nolike = 1;
-  //       let id = localStorage.getItem('id');
-  //       for(let idLike in this.Array_iduserNolike){
-  //         if(this.Array_iduserNolike[idLike] == id){
-
-  //           this.Array_iduserNolike.splice(this.Array_iduserNolike[idLike],1)
-  //           this.mensaje.likes = this.Array_iduserNolike;
-
-  //           this.GuardarLikes('no','si').subscribe()
-  //           break
-  //         }
-  //       }
-  //       return
-  //     }
-
-  //     if(this.estado_like == 2){
-  //       $('.fa-thumbs-up').css('color','gray');
-  //       this.estado_like = 1;
-  //       let id = localStorage.getItem('id')
-  //       for(let idLike in this.Array_iduser){
-  //         if(this.Array_iduser[idLike] == id){
-  //           this.Array_iduser.splice(this.Array_iduser[idLike],1)
-  //           this.mensaje.likes = this.Array_iduser;
-  //           this.GuardarLikes('si','no').subscribe()
-  //           break
-  //         }
-  //       }
-  //     }
-  //       setTimeout(()=>{
-  //         let id = localStorage.getItem('id')
-  //         this.Array_iduserNolike.push(id)
-  //         this.mensaje.no_megusta = this.Array_iduserNolike;
-  //         this.GuardarLikes('no','si').subscribe()
-  //         this.estado_nolike = 2;
-  //       },200)
-  //       return
-  //   }
-
-
-  // }
+  
 
   BucarMensajes(busqueda:string){
     let url = URL_SERVICIOS + 'mensajes/buscar/' + busqueda;
 
     return this._Http.get(url).pipe(map((resp:any)=>{
       this.Resultado_busqueda = resp.mensaje;
-      console.log(this.Resultado_busqueda)
     }))
 
   }
@@ -484,7 +373,6 @@ export class MensajesService {
   CrearMensaje(){
 
     let id = localStorage.getItem('id')
-    // let token = localStorage.getItem('token')
     let id_on = localStorage.getItem('id')
 
     this.mensaje.hecho_id = id;
@@ -524,20 +412,7 @@ export class MensajesService {
 
   }
 
-  // AsignarMensaje(){
-  //    let token = localStorage.getItem('token')
-    
-  //   let id = localStorage.getItem('id')
-  //   this.mensaje.hecho_usuario = id
-  //   this.mensajes.push(this.mensajeCreado)
-  //   let url = 'http://localhost:3000/usuarios/mensaje/' + id + '/' + '?token=' + token;
-  //   return this._Http.put(url,this.mensajes).pipe(map((resp:any)=>{
-  //     this.mensajes = resp.usuario.mensajes;
-  //     console.log(this.mensajes)
-
-  //     // return resp.mensaje;
-  //   }))
-  // }
+ 
 
   traerTodosLosMensajes(){
     let id = localStorage.getItem('id')
@@ -570,7 +445,6 @@ export class MensajesService {
     let url = URL_SERVICIOS + 'mensajes/' + this.mensaje._id;
     return this._Http.put(url,this.mensaje).pipe(map((resp:any)=>{
       this.TraerMensajeConId().subscribe((resp:any)=>{
-        console.log(resp)
         this._socketService.socket.emit('mensajeDB',{
           mensajeActual: resp
         })
@@ -600,7 +474,6 @@ export class MensajesService {
     let url = URL_SERVICIOS + 'mensajes/borrar/' + id;
 
     return this._Http.put(url,this.mensaje).pipe(map((resp:any)=>{
-      console.log(resp)
       const swalWithBootstrapButtons = swal.mixin({
         confirmButtonClass: 'btn btn-success',
         cancelButtonClass: 'btn btn-danger',

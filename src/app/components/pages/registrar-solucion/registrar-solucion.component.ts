@@ -22,13 +22,21 @@ export class RegistrarSolucionComponent implements OnInit {
   
 
   ngOnInit() {
+
+    this._mensaje.mensaje = {
+      "nombre_error":"",
+      "tipo_error":"",
+      "solucion":"",
+      "hecho_id":"",
+      "hecho_objeto":"",
+      "likes":""
+    }
   
 
 
   // this._mensaje.traerTodosLosMensajes().subscribe()
   this._mensaje.TraerMensajeConId().subscribe((resp:any)=>{
     this._mensaje.mensajes = resp;
-    console.log(this._mensaje.mensajes)
   })
 
 

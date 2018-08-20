@@ -48,13 +48,11 @@ export class UsuariosService {
   ) { }
 
   EditarYSubirFoto(archivo:any){
-    console.log(archivo)
     let id = localStorage.getItem('id');
 
 
     return this._SubirImagen.subirArchivo(archivo,id)
     .catch((resp:any)=>{
-      console.log(resp)
       swal(
         'Imagen',
         'Error al subir la imagen',
@@ -63,7 +61,6 @@ export class UsuariosService {
       // alertify.log( resp.mensaje + ' ' + this.configuraObjeto.nombre);
     })
     .then((resp:any)=>{
-      console.log(resp)
       swal(
         'Imagen',
         'Actualizada correctamente',
@@ -117,7 +114,7 @@ export class UsuariosService {
         this.contra = 'si';
         return "La contraseña son iguales";
       }else{
-        console.log('contrase;as no son iguales')
+        // console.log('contrase;as no son iguales')
           return "La contraseña no son iguales";
       }
   
@@ -127,7 +124,6 @@ export class UsuariosService {
 
   CrearUsuario(){
     let url = URL_SERVICIOS + 'usuarios';
-    console.log(this.UsuarioObjeto)
    return this._http.post(url,this.UsuarioObjeto).pipe(map((resp:any)=>{
     this.UsuarioObjeto = {
       "correo":"",
@@ -145,10 +141,8 @@ export class UsuariosService {
   }
 
   EditarUsuario(){
-    alert(this.contra)
     let id = localStorage.getItem('id');
     let token = localStorage.getItem('token')
-    console.log(this.UsuarioObjeto)
 
     let url = URL_SERVICIOS + 'usuarios/' + id + '/' + this.contra + '?token=' + token;
  
@@ -161,7 +155,6 @@ export class UsuariosService {
   Iniciar(){
     let url = URL_SERVICIOS + 'usuarios/login';
     return this._http.post(url,this.login).pipe(map((resp:any)=>{
-      console.log(resp)
         localStorage.setItem('id', resp.usuario_id)
         localStorage.setItem('token', resp.token)
         localStorage.setItem('usuario', JSON.stringify(resp.usuario));
@@ -194,7 +187,7 @@ export class UsuariosService {
     return this._http.get(url).pipe(map((resp:any)=>{
       token = resp.token;
       localStorage.setItem('token', token)
-      console.log("se renovo el token")
+      // console.log("se renovo el token")
       return true; 
       }))
   }
@@ -219,9 +212,9 @@ export class UsuariosService {
       // console.log(ahora);
 
       if( tokenExp.getTime() > ahora.getTime() ){
-        console.log("Todavia no se vence")
+        // console.log("Todavia no se vence")
       }else{
-        console.log("Token vencido")
+        // console.log("Token vencido")
 
         let valor_token =  localStorage.getItem('role_token');
 
@@ -229,10 +222,10 @@ export class UsuariosService {
 
           this.renuevaToken()
               .subscribe( ()=>{
-                console.log("Token renovado")
+                // console.log("Token renovado")
   
               }, () => {
-                console.log("No se pudo renovar el token")
+                // console.log("No se pudo renovar el token")
   
                 this.router.navigate(['/login']);
   

@@ -352,7 +352,6 @@ export class LoginComponent implements OnInit {
         this.UsuService.Iniciar().subscribe(((resp:any)=>{
           this.router.navigate(['/pages/inicio']);
           localStorage.setItem('role_token','desactivado')
-          location.reload()
           this.UsuService.login.usuario = "";
           this.UsuService.login.password = "";
 

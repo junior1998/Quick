@@ -31,6 +31,15 @@ export class SolucionComponent implements OnInit {
   id;
 
   ngOnInit() {
+
+    this._mensajesService.mensaje = {
+      "nombre_error":"",
+      "tipo_error":"",
+      "solucion":"",
+      "hecho_id":"",
+      "hecho_objeto":"",
+      "likes":""
+    }
       
 
     this._mensajesService.TraerMensaje(this.id).subscribe((resp:any)=>{
@@ -47,32 +56,7 @@ export class SolucionComponent implements OnInit {
    
     
 
-    $("#buscar_solucion1").keyup(()=>{
-      if($("#buscar_solucion1").val().length >= 1){
-        $(".content_bottom_solucion").css("opacity","0");
-        $(".content_bottom_buscar_solucion").css("opacity","10");
-
-        setTimeout(function(){
-          $(".content_bottom_solucion").css("display","none");
-        $(".content_bottom_buscar_solucion").css("display","flex");
-        }, 300)
-
-        
-      }else{
-        if($("#buscar_solucion1").val().length <= 0){
-          $(".content_bottom_solucion").css("opacity","10");
-          $(".content_bottom_buscar_solucion").css("opacity","0");
-
-          setTimeout(function(){
-            $(".content_bottom_buscar_solucion").css("display","none");
-            $(".content_bottom_solucion").css("display","flex");
-          }, 300)
-
-
-        }
-      }
-    })
-
+    
 
     $(document).ready(()=>{
 
@@ -111,10 +95,38 @@ export class SolucionComponent implements OnInit {
 
   buscarSolucion(busqueda:string){
     this._mensajesService.BucarMensajes(busqueda).subscribe()
+
+    if($("#buscar_solucion1").val().length >= 1){
+      $(".content_bottom_solucion").css("opacity","0");
+      $(".content_bottom_buscar_solucion").css("opacity","10");
+
+      setTimeout(function(){
+        $(".content_bottom_solucion").css("display","none");
+      $(".content_bottom_buscar_solucion").css("display","flex");
+      }, 300)
+
+      
+    }else{
+      if($("#buscar_solucion1").val().length <= 0){
+        $(".content_bottom_solucion").css("opacity","10");
+        $(".content_bottom_buscar_solucion").css("opacity","0");
+
+        setTimeout(function(){
+          $(".content_bottom_buscar_solucion").css("display","none");
+          $(".content_bottom_solucion").css("display","flex");
+        }, 300)
+
+
+      }
+    }
+    
   }
 
   enviarAsolucion(id:string){
     this.router.navigate(['/pages/solucion',id])
+    $('#buscar_solucion1[type="text"]').val('');
+    this.buscarSolucion('')
+    $('#buscar_solucion1').keyup()
     this._mensajesService.TraerMensaje(this.id).subscribe((resp:any)=>{
       console.log(resp)
       this._mensajesService.mensaje = resp;
@@ -130,11 +142,8 @@ export class SolucionComponent implements OnInit {
     goBack(){
       window.history.back();
     }
-
   
-
-   
-
+        
 
 
 }

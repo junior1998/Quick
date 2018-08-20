@@ -7,9 +7,7 @@ export class SubirImagenService {
 
   constructor() { }
 
-  URL_SERVICIOS
-
-
+  
 
   subirArchivo( archivo: File, id: string ) {
 
@@ -26,17 +24,17 @@ export class SubirImagenService {
         if ( xhr.readyState === 4 ) {
 
           if ( xhr.status === 200 ) {
-            console.log( 'Imagen subida' );
+            // console.log( 'Imagen subida' );
             resolve( JSON.parse( xhr.response ) );
           } else {
-            console.log( 'Fallo la subida' );
+            // console.log( 'Fallo la subida' );
             reject( xhr.response );
           }
 
         }
       };
       let token = localStorage.getItem('token');
-      let url = this.URL_SERVICIOS + '/usuarios/imagen/' + id;
+      let url = URL_SERVICIOS + 'usuarios/imagen/' + id;
 
       xhr.open('PUT', url, true );
       xhr.send( formData );
