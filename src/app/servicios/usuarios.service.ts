@@ -34,7 +34,7 @@ export class UsuariosService {
   login:any = {
     "usuario":"",
     "password":"",
-    "sesiones":""
+    "sesiones":"activado"
   }
 
   usuarioIniciado:any;

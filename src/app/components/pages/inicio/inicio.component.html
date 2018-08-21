@@ -21,8 +21,11 @@
                     </div>
                 </div>
                 <div class="resultado">
-                    <div *ngIf="this._ServicioMensaje.Resultado_busqueda.length < 1 && this.estado_ventana_resultado == 2" class="resultadoss">
+                    <div *ngIf="this._ServicioMensaje.Resultado_busqueda.length < 1 && input.value.length > 0" class="resultadoss">
                         <h1>No hay resultado para su busqueda</h1>
+                    </div>
+                    <div *ngIf="this._ServicioMensaje.Resultado_busqueda.length < 1" class="resultadoss">
+                        <h1>Bienvenido, haga una busqueda</h1>
                     </div>
 
                     <div class="interior_resultado" *ngIf="this._ServicioMensaje.Resultado_busqueda.length > 0">

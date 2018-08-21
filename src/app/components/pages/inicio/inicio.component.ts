@@ -226,7 +226,7 @@ export class InicioComponent implements OnInit {
 
     
   
-    $("#buscar").keyup(()=>{
+
         this._UsuarioService.renuevaToken()
     
         this.ventana_ancho = $(window).width();
@@ -235,7 +235,7 @@ export class InicioComponent implements OnInit {
 
        //Ventana mayor width a 960
       
-      if( $("#buscar").val().length >= 1 && this.ventana_ancho >= 960){
+      if( this.ventana_ancho >= 960){
 
         $(".interior_buscar").css("height","70px");
 
@@ -284,6 +284,9 @@ export class InicioComponent implements OnInit {
         $(".resultado").css("height","calc(100% - 120px)");
         $(".resultado").css("position","absolute");
         $(".resultado").css("top","80px");
+        // $(".resultadoss").css("background","red");
+
+        
         $(".buttons").css("border-bottom","none");
 
         
@@ -335,181 +338,181 @@ export class InicioComponent implements OnInit {
       }
 
       //Ventana mayor width a 960
-      // if($("#buscar").val().length >= 1 && this.ventana_ancho >= 915 && this.ventana_ancho <= 960){
+      if(this.ventana_ancho >= 915 && this.ventana_ancho <= 960){
         
-      //   $(".interior_buscar").css("height","60px");
+        $(".interior_buscar").css("height","60px");
 
 
-      //   // // animacion del logo
+        // // animacion del logo
 
-      //   $(".imagen").css("width","25%");
-      //   $(".imagen").css("height","60px");
-      //   $(".img").css("width","180px");
-      //   if (this.estado_ventana_resultado == 1 ) {
-      //     $(".img").css("opacity","0");
-      //     $(".img").css("display","none");
-      //    }
+        $(".imagen").css("width","25%");
+        $(".imagen").css("height","60px");
+        $(".img").css("width","180px");
+        if (this.estado_ventana_resultado == 1 ) {
+          $(".img").css("opacity","0");
+          $(".img").css("display","none");
+         }
 
-      //   // // animacion del buscador
-      //   $(".input_buscar").css("width","50%");
-      //   $(".input_bus").css("width","95%");
-      //   $(".input_bus").css("height","45px");
+        // // animacion del buscador
+        $(".input_buscar").css("width","50%");
+        $(".input_bus").css("width","95%");
+        $(".input_bus").css("height","45px");
 
-      //   $(".input_buscar").css("height","60px");
-
-
-      //   // // animacion del boton
-      //   $(".buttons").css("width","25%");
-      //   $(".buttons").css("height","60px");
-
-        
-      //   if (this.estado_ventana_resultado == 1 ) {
-
-      //     $(".button_nuevo").css("opacity","0");
-      //     $(".button_nuevo").css("display","none");
-      //   }
+        $(".input_buscar").css("height","60px");
 
 
-
-      //   $(".button_nuevo").css("height","45px");
-      //   $(".button_nuevo").css("font-size","17px");
-
-
-
-      //   //Cerrando la pantalla
-        
-
-      //   $(".buscador").css("height","60px");
-      //   $(".buscador").css("width","calc(100% - 0px)");
-      //   $(".buscador").css("top","0%");
-      //   $(".buscador").css("left","0%");
-
-      //   setTimeout(function(){
-      //     $(".resultado").css("display","inline-block");
-      //     $(".resultado").css("width","100%");
-      //     $(".resultado").css("height","calc(100% - 110px)");
-      //     $(".resultado").css("position","absolute");
-      //     $(".resultado").css("top","75px");
-      //     $(".img").css("opacity","10");
-
-      //     $(".button_nuevo").css("opacity","10");
-
-      //   }, 500)
-
-      //   setTimeout(function(){
-      //     $(".img").css("display","flex");
-
-      //     $(".button_nuevo").css("display","flex");
-
-      //   }, 100)
-      //   this.estado_ventana_resultado = 2;
-      // }else{
-      //   if(this.ventana_ancho <= 960 && this.ventana_ancho >= 915){
-      //     $(".resultado").css("display","none");
-  
-      //     $(".buscador").css("width","80%");
-      //     $(".buscador").css("height","240px");
-      //     $(".buscador").css("top","calc(50% - 110px)");
-      //     $(".buscador").css("left","calc(50% - 40%)");
-  
-      //     // // animacion del logo
-      //     $(".imagen").css("width","100%");
-      //     $(".img").css("width","350px");
-  
-      //     // // animacion del buscador
-      //     $(".input_buscar").css("width","100%");
-      //     $(".input_buscar").css("height","70px");
-  
-      //     // // animacion del boton
-      //     $(".buttons").css("width","100%");
-      //     $(".buttons").css("height","70px");
-      //     $(".buttons").css("border-bottom","none");
-
-      //     this.estado_ventana_resultado = 1;
-
-      //     return;
-      //    }
-      // }
-
-       //Ventana mayor width a 0
-      //  if($("#buscar").val().length >= 1 && this.ventana_ancho >= 0 && this.ventana_ancho <= 915){
-      //   // // animacion del logo
-      //   $(".imagen").css("width","100%");
-      //   $(".imagen").css("height","65px");
-      //   $(".img").css("width","250px");
+        // // animacion del boton
+        $(".buttons").css("width","25%");
+        $(".buttons").css("height","60px");
 
         
+        if (this.estado_ventana_resultado == 1 ) {
 
-      //   $(".input_buscar").css("height","65px");
-      //   $(".input_bus").css("width","80%");
-      //   $(".input_bus").css("height","50px");
+          $(".button_nuevo").css("opacity","0");
+          $(".button_nuevo").css("display","none");
+        }
+
+
+
+        $(".button_nuevo").css("height","45px");
+        $(".button_nuevo").css("font-size","17px");
+
+
+
+        //Cerrando la pantalla
+        
+
+        $(".buscador").css("height","60px");
+        $(".buscador").css("width","calc(100% - 0px)");
+        $(".buscador").css("top","0%");
+        $(".buscador").css("left","0%");
+
+        setTimeout(function(){
+          $(".resultado").css("display","inline-block");
+          $(".resultado").css("width","100%");
+          $(".resultado").css("height","calc(100% - 110px)");
+          $(".resultado").css("position","absolute");
+          $(".resultado").css("top","75px");
+          $(".img").css("opacity","10");
+
+          $(".button_nuevo").css("opacity","10");
+
+        }, 500)
+
+        setTimeout(function(){
+          $(".img").css("display","flex");
+
+          $(".button_nuevo").css("display","flex");
+
+        }, 100)
+        this.estado_ventana_resultado = 2;
+      }else{
+        if(this.ventana_ancho <= 960 && this.ventana_ancho >= 915){
+          $(".resultado").css("display","none");
+  
+          $(".buscador").css("width","80%");
+          $(".buscador").css("height","240px");
+          $(".buscador").css("top","calc(50% - 110px)");
+          $(".buscador").css("left","calc(50% - 40%)");
+  
+          // // animacion del logo
+          $(".imagen").css("width","100%");
+          $(".img").css("width","350px");
+  
+          // // animacion del buscador
+          $(".input_buscar").css("width","100%");
+          $(".input_buscar").css("height","70px");
+  
+          // // animacion del boton
+          $(".buttons").css("width","100%");
+          $(".buttons").css("height","70px");
+          $(".buttons").css("border-bottom","none");
+
+          this.estado_ventana_resultado = 1;
+
+          return;
+         }
+      }
+
+      //  Ventana mayor width a 0
+       if(this.ventana_ancho >= 0 && this.ventana_ancho <= 915){
+        // // animacion del logo
+        $(".imagen").css("width","100%");
+        $(".imagen").css("height","65px");
+        $(".img").css("width","250px");
+
+        
+
+        $(".input_buscar").css("height","65px");
+        $(".input_bus").css("width","80%");
+        $(".input_bus").css("height","50px");
 
        
 
 
-      //   // // animacion del boton
-      //   $(".buttons").css("width","100%");
-      //   $(".buttons").css("height","65px");
-      //   $(".buttons").css("border-bottom","1px solid rgb(211, 211, 211)");
+        // // animacion del boton
+        $(".buttons").css("width","100%");
+        $(".buttons").css("height","65px");
+        $(".buttons").css("border-bottom","1px solid rgb(211, 211, 211)");
 
        
 
 
-      //   $(".button_nuevo").css("height","45px");
-      //   $(".button_nuevo").css("font-size","17px");
+        $(".button_nuevo").css("height","45px");
+        $(".button_nuevo").css("font-size","17px");
 
 
 
-      //   //Cerrando la pantalla
+        //Cerrando la pantalla
         
 
-      //   $(".buscador").css("height","100px");
-      //   $(".buscador").css("width","calc(100% - 0px)");
-      //   $(".buscador").css("top","0%");
-      //   $(".buscador").css("left","0%");
+        $(".buscador").css("height","100px");
+        $(".buscador").css("width","calc(100% - 0px)");
+        $(".buscador").css("top","0%");
+        $(".buscador").css("left","0%");
 
-      //   setTimeout(function(){
-      //     $(".resultado").css("display","inline-block");
-      //     $(".resultado").css("width","100%");
-      //     $(".resultado").css("height","calc(100% - 232px)");
-      //     $(".resultado").css("position","absolute");
-      //     $(".resultado").css("top","195px");
+        setTimeout(function(){
+          $(".resultado").css("display","inline-block");
+          $(".resultado").css("width","100%");
+          $(".resultado").css("height","calc(100% - 232px)");
+          $(".resultado").css("position","absolute");
+          $(".resultado").css("top","195px");
 
-      //   }, 500)
-      // }else{
-      //   if(this.ventana_ancho <= 915 && this.ventana_ancho >= 0){
-      //     $(".resultado").css("display","none");
+        }, 500)
+      }else{
+        if(this.ventana_ancho <= 915 && this.ventana_ancho >= 0){
+          $(".resultado").css("display","none");
   
-      //     $(".buscador").css("width","80%");
-      //     $(".buscador").css("height","240px");
-      //     $(".buscador").css("top","calc(50% - 110px)");
-      //     $(".buscador").css("left","calc(50% - 40%)");
+          $(".buscador").css("width","80%");
+          $(".buscador").css("height","240px");
+          $(".buscador").css("top","calc(50% - 110px)");
+          $(".buscador").css("left","calc(50% - 40%)");
   
-      //     // // animacion del logo
-      //     $(".imagen").css("width","100%");
-      //     $(".imagen").css("height","100px");
+          // // animacion del logo
+          $(".imagen").css("width","100%");
+          $(".imagen").css("height","100px");
 
-      //     $(".img").css("width","350px");
+          $(".img").css("width","350px");
   
-      //     // // animacion del buscador
-      //     $(".input_buscar").css("width","100%");
-      //     $(".input_buscar").css("height","70px");
+          // // animacion del buscador
+          $(".input_buscar").css("width","100%");
+          $(".input_buscar").css("height","70px");
   
-      //     // // animacion del boton
-      //     $(".buttons").css("width","100%");
-      //     $(".buttons").css("height","70px");
-      //     $(".buttons").css("border-bottom","none");
+          // // animacion del boton
+          $(".buttons").css("width","100%");
+          $(".buttons").css("height","70px");
+          $(".buttons").css("border-bottom","none");
 
-      //     return;
-      //    }
-      // }
+          return;
+         }
+      }
 
       
    
 
 
 
-    })
+
   
   }
 
