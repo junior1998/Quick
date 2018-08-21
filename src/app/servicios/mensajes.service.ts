@@ -458,7 +458,6 @@ export class MensajesService {
         'Actualizado correctamente',
         'success'
       )
-  this.texto_boton = 'Guardar';
   setTimeout(()=>{
     
     $('#problema').blur();

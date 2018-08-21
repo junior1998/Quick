@@ -23,6 +23,8 @@ export class RegistrarSolucionComponent implements OnInit {
 
   ngOnInit() {
 
+    this._mensaje.texto_boton = 'Guardar'
+
     this._mensaje.mensaje = {
       "nombre_error":"",
       "tipo_error":"",
