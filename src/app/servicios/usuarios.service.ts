@@ -34,9 +34,9 @@ export class UsuariosService {
   login:any = {
     "usuario":"",
     "password":"",
-    "sesiones":"activado"
+    "sesiones":""
   }
-
+  google:boolean;
   usuarioIniciado:any;
 
   archivoPrinService: File;
@@ -83,12 +83,13 @@ export class UsuariosService {
   }
 
   logout(){
+    location.reload()
+
     localStorage.removeItem('id');
     localStorage.removeItem('token');
     localStorage.removeItem('usuario');
 
     this.router.navigate(['/login']);
-    location.reload()
 
   }
 
@@ -159,6 +160,12 @@ export class UsuariosService {
         localStorage.setItem('token', resp.token)
         localStorage.setItem('usuario', JSON.stringify(resp.usuario));
 
+        this.CargarUsuarioID().subscribe((resp:any)=>{
+          console.log(resp)
+          this.UsuarioObjeto = resp;
+          this.google = this.UsuarioObjeto.google;
+        })
+
       return true;
     }))
 
@@ -166,12 +173,18 @@ export class UsuariosService {
 
   loginGoogle(token:string){
     let url = URL_SERVICIOS + 'usuarios/google';
-
     return this._http.post(url,{token})
                .pipe(map((resp:any)=>{
+
                 localStorage.setItem('id', resp.usuario_id);
                 localStorage.setItem('token', resp.token);
                 localStorage.setItem('usuario', JSON.stringify(resp.usuario));
+                localStorage.setItem('role_token','activado')
+                this.CargarUsuarioID().subscribe((resp:any)=>{
+                  console.log(resp)
+                  this.UsuarioObjeto = resp;
+                  this.google = this.UsuarioObjeto.google;
+                })
                 return true;
         
                }))

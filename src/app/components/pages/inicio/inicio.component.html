@@ -28,7 +28,7 @@
                         <h1>Bienvenido, haga una busqueda</h1>
                     </div>
 
-                    <div class="interior_resultado" *ngIf="this._ServicioMensaje.Resultado_busqueda.length > 0">
+                    <div class="interior_resultado">
 
 
                         <div class="carta" *ngFor="let resultado of this._ServicioMensaje.Resultado_busqueda">
@@ -117,25 +117,25 @@
                             </div>
                             <div class="input_formulario">
                                 <div class="input-group">
-                                    <input type="text" [disabled]="google" class="input" [(ngModel)]="this._UsuarioService.UsuarioObjeto.correo" id="correoAct" name="correo">
+                                    <input type="text" [disabled]="this._UsuarioService.google" class="input" [(ngModel)]="this._UsuarioService.UsuarioObjeto.correo" id="correoAct" name="correo">
                                     <label class="label" id="label_correoAct" for="correoAct">Correo electrinico</label>
                                 </div>
                             </div>
                             <div class="input_formulario">
                                 <div class="input-group">
-                                    <input type="text" [disabled]="google" class="input" [(ngModel)]="this._UsuarioService.UsuarioObjeto.usuario" id="usuarioAct" name="usuario">
+                                    <input type="text" [disabled]="this._UsuarioService.google" class="input" [(ngModel)]="this._UsuarioService.UsuarioObjeto.usuario" id="usuarioAct" name="usuario">
                                     <label class="label" id="label_usuarioAct" for="usuarioAct">Nombre de usuario</label>
                                 </div>
                             </div>
                             <div class="input_formulario">
                                 <div class="input-group">
-                                    <input type="password" [disabled]="google" class="input" id="contraAct" [(ngModel)]="this._UsuarioService.UsuarioContra.password" name="password">
+                                    <input type="password" [disabled]="this._UsuarioService.google" class="input" id="contraAct" [(ngModel)]="this._UsuarioService.UsuarioContra.password" name="password">
                                     <label class="label" id="label_contraAct" for="contraAct">Contraseña</label>
                                 </div>
                             </div>
                             <div class="input_formulario">
                                 <div class="input-group">
-                                    <input type="password" [disabled]="google" class="input" id="confir_contra_Act" [(ngModel)]="this._UsuarioService.UsuarioContra.password1" name="password1">
+                                    <input type="password" [disabled]="this._UsuarioService.google" class="input" id="confir_contra_Act" [(ngModel)]="this._UsuarioService.UsuarioContra.password1" name="password1">
                                     <label class="label" id="label_confir_contra_Act" for="confir_contra_Act">Confirmar contraseña</label>
                                 </div>
                             </div>

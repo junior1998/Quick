@@ -63,21 +63,21 @@
                 background: white;
                 position: relative;
                 .buscador {
-                    width: 80%;
-                    height: 240px;
+                    width: calc(100% - 0px);
+                    height: 70px;
                     // background: orange;
                     position: absolute;
-                    top: calc(45% - 120px);
-                    left: calc(50% - 40%);
+                    top: 0%;
+                    left: 0%;
                     transition: all 0.5s ease;
                     .interior_buscar {
                         width: 100%;
-                        height: 100%;
+                        height: 70px;
                         // position: relative;
                         .imagen {
                             // margin-top: 10px;
-                            width: 100%;
-                            height: 100px;
+                            width: 25%;
+                            height: 70px;
                             // background: green;
                             top: calc(50% - 120px);
                             display: flex;
@@ -87,13 +87,13 @@
                             // transition: all 0.5s ease;
                             float: left;
                             .img {
-                                width: 350px;
+                                width: 200px;
                                 transition: all 0.5s ease;
                             }
                         }
                         .input_buscar {
-                            width: 100%;
-                            height: 70px;
+                            width: 50%;
+                            height: 60px;
                             // background: rgb(0, 113, 128);
                             top: calc(50% - 20px);
                             left: calc(50% - 50%);
@@ -104,9 +104,10 @@
                             // transition: all 0.5s ease;
                             float: left;
                             .input_bus {
+                                margin-top: 10px;
                                 padding: 20px;
-                                width: 80%;
-                                height: 50px;
+                                width: 95%;
+                                height: 60px;
                                 outline: none;
                                 border: none;
                                 box-shadow: 0px 1px 5px -1px gray;
@@ -114,15 +115,15 @@
                             }
                             .input_bus:hover {
                                 padding: 20px;
-                                width: 80%;
-                                height: 50px;
+                                width: 95%;
+                                height: 60px;
                                 outline: none;
                                 border: none;
                                 box-shadow: 0px 3px 5px -1px gray;
                             }
                         }
                         .buttons {
-                            width: 100%;
+                            width: 25%;
                             height: 70px;
                             // background: rgb(87, 87, 87);
                             top: calc(70% - 35px);
@@ -168,14 +169,14 @@
                 }
                 .resultado {
                     width: 100%;
-                    height: calc(100% - 1100px);
+                    height: calc(100% - 70px);
                     background: #ffffff;
-                    display: none;
+                    position: absolute;
+                    top: 70px;
                     transition: all 0.5s ease;
                     .interior_resultado {
                         width: 100%;
                         height: 100%;
-                        background: white;
                         overflow: auto;
                         .carta {
                             width: 100%;
@@ -443,6 +444,7 @@
                                 border: 1px solid #227ecf;
                                 cursor: pointer;
                                 margin-top: 15px;
+                                background: red;
                             }
                             .imagen_perfil {
                                 margin-top: 10px;
@@ -659,8 +661,36 @@
 }
 
 @media screen and (max-width: 915px) {
+    .img {
+        width: 290px!important;
+    }
     .carta_interior {
         width: 95%!important;
+    }
+    .resultado {
+        height: calc(100% - 70px)!important;
+        top: 230px!important;
+    }
+    .buscador {
+        width: calc(100% - 0px);
+        height: 220px!important;
+        .interior_buscar {
+            .imagen {
+                // margin-top: 10px;
+                width: 100%!important;
+                height: 90px!important;
+            }
+            .input_buscar {
+                width: 100%!important;
+                height: 60px!important;
+                margin-top: 0px!important;
+            }
+            .buttons {
+                width: 100%!important;
+                height: 85px!important;
+                border: none!important;
+            }
+        }
     }
 }
 

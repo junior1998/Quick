@@ -27,7 +27,25 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.googleInit();
+
     $( document ).ready(() =>{
+
+    $('#btnGoogle').blur(()=>{
+      $('#nombre').focus()
+    })
+
+    $('#registrar_LOgin').blur(()=>{
+      $('#nombreCom').focus()
+    })
+
+
+
+
+
+
+
+
+
       setTimeout(function(){
         $('#nombre').trigger('click');
         $('#clave').trigger('click');
@@ -389,6 +407,7 @@ export class LoginComponent implements OnInit {
   }
 
   googleInit(){
+    
     gapi.load('auth2', () => {
       this.auth2 = gapi.auth2.init({
         client_id: '203813453417-upjohav81gf30bsg8aqovr4p4t78vskq.apps.googleusercontent.com',
@@ -396,18 +415,22 @@ export class LoginComponent implements OnInit {
         scope: 'profile email'
       });
       this.attachSignin( document.getElementById('btnGoogle') );
+      // console.log(gapi)
+
     });
   }
 
   attachSignin( element ){
-    this.auth2.attachClickHandler(element, {}, (googleUser) =>{
-        // let profile = googleUser.getBasicProfile();
-        let token = googleUser.getAuthResponse().id_token;
 
+
+    this.auth2.attachClickHandler(element, {}, (googleUser) =>{
+      
+      // let profile = googleUser.getBasicProfile();
+      let token = googleUser.getAuthResponse().id_token;
         this.UsuService.loginGoogle(token)
             .subscribe(resp => {
-              this.router.navigate(['/pages/inicio']);
               location.reload()
+              this.router.navigate(['/pages/inicio']);
             });
 
     })
