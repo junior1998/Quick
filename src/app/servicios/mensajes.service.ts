@@ -142,31 +142,18 @@ export class MensajesService {
 
   likes(opcion:string){
     this.ejecutarHasta = true
-    if(opcion == 'like' && !this.no_like){
+    if(opcion == 'like'){
       console.log(this.like)
         this.numero_like_viejo = this.numero_like;
         this.numero_nolike_viejo = this.numero_nolike;
         this.GuardarLike('likes','no',this.mensaje._id).subscribe()
-        // this.like = !this.like;
         return
-    }else if(opcion == 'no_like' && !this.like ){
+    }else if(opcion == 'no_like'){
       console.log(this.like)
       this.numero_like_viejo = this.numero_like;
       this.numero_nolike_viejo = this.numero_nolike;
       this.GuardarLike('no','no_like',this.mensaje._id).subscribe()
-        // this.no_like = !this.no_like;
         return
-    }else{
-      if(this.no_like == true){
-        console.log(this.like)
-        this.no_like = false;
-        this.like = true;
-      }else if(this.like == true){
-        console.log(this.like)
-        this.like = false;
-        this.no_like = true;
-      }
-      
     }
   }
 
