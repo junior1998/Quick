@@ -32,25 +32,21 @@ export class SolucionComponent implements OnInit {
 
   ngOnInit() {
 
-    this._mensajesService.mensaje = {
-      "nombre_error":"",
-      "tipo_error":"",
-      "solucion":"",
-      "hecho_id":"",
-      "hecho_objeto":"",
-      "likes":""
-    }
+    // this._mensajesService.mensaje = {
+    //   "nombre_error":"",
+    //   "tipo_error":"",
+    //   "solucion":"",
+    //   "hecho_id":"",
+    //   "hecho_objeto":"",
+    //   "likes":""
+    // }
       
 
     this._mensajesService.TraerMensaje(this.id).subscribe((resp:any)=>{
+      console.log(resp)
       this._mensajesService.mensaje = resp;
-      this._mensajesService.Array_iduser = this._mensajesService.mensaje.likes;
-      this._mensajesService.Array_iduserNolike = this._mensajesService.mensaje.no_megusta;
-      this._mensajesService.cargarLikes1()
-
-      // this._mensajesService.Array_iduser = this._mensajesService.mensaje.likes;
-      // this.cargar_like()
-      
+        this._mensajesService.Array_iduser = this._mensajesService.mensaje.likes;
+        this._mensajesService.Array_iduserNolike = this._mensajesService.mensaje.no_megusta;
     })
 
    
@@ -129,13 +125,8 @@ export class SolucionComponent implements OnInit {
     $('#buscar_solucion1').keyup()
     this._mensajesService.TraerMensaje(this.id).subscribe((resp:any)=>{
       console.log(resp)
-      this._mensajesService.mensaje = resp;
-      this._mensajesService.Array_iduser = this._mensajesService.mensaje.likes;
-      this._mensajesService.Array_iduserNolike = this._mensajesService.mensaje.no_megusta;
-      this._mensajesService.cargarLikes1()
-
-      // this._mensajesService.Array_iduser = this._mensajesService.mensaje.likes;
-      // this.cargar_like()
+      this._mensajesService.mensaje = resp
+     
       
     })
     }
