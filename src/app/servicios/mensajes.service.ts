@@ -37,10 +37,10 @@ export class MensajesService {
   Array_iduser:any[]=[]
   Array_iduserNolike:any[]=[]
 
-  // barra:number = 0; 
+  barra:number = 0; 
   like: boolean = false ;
   no_like: boolean = false;
-  // resultado:number = 0;
+  resultado:number = 0;
 
   estado_like:number = 1;
   estado_nolike:number = 1;
@@ -80,20 +80,8 @@ export class MensajesService {
       this.Array_iduser = this.mensaje.likes;
       this.Array_iduserNolike = this.mensaje.no_megusta;
 
-      if(this.Array_iduser.indexOf(this.id_Usuario) >= 0){
-        console.log('entro')
-        this.like = true;
-      }else {
-        this.like = false
-      }
-
-      if(this.Array_iduserNolike.indexOf(this.id_Usuario) >= 0){
-        console.log('entro')
-        this.no_like =  true;
-      }else{
-        this.no_like = false;
-      }
-
+      this.cargarLikes()
+      
       if(this.numero_like_viejo == this.numero_like){
         if(this.ejecutarHasta == true){
 
@@ -121,8 +109,44 @@ export class MensajesService {
         
       }
 
-
     })
+   }
+
+   cargarLikes(){
+    if(this.Array_iduser.indexOf(this.id_Usuario) >= 0){
+      this.CargarLikes()
+      this.like = true;
+    }else {
+      this.like = false
+    }
+
+    if(this.Array_iduserNolike.indexOf(this.id_Usuario) >= 0){
+      this.CargarNoLikes()
+      this.no_like =  true;
+    }else{
+      this.no_like = false;
+    }
+
+    if(this.Array_iduser.length == 0 && this.Array_iduserNolike.length == 0){
+      this.barra = 50
+    }
+   }
+
+   CargarLikes(){
+    this.resultado = this.Array_iduser.length + this.Array_iduserNolike.length;
+    this.barra = this.resultado / this.Array_iduser.length * 100
+    console.log(this.barra)
+   }
+
+   CargarNoLikes(){
+    if(this.Array_iduserNolike.length >= 0 && this.Array_iduser.length <= 0){
+      this.barra = 0;
+      console.log('entro en cargar no likes')
+      return
+    }
+    this.resultado = this.Array_iduser.length + this.Array_iduserNolike.length;
+    this.barra = this.resultado / this.Array_iduserNolike.length * 100
+    console.log(this.barra)
    }
 
    GuardarLike(likes:string,no_like:string,id:string){
