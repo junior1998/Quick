@@ -48,6 +48,7 @@ export class SolucionComponent implements OnInit {
         this._mensajesService.Array_iduser = this._mensajesService.mensaje.likes;
         this._mensajesService.Array_iduserNolike = this._mensajesService.mensaje.no_megusta;
         this._mensajesService.cargarLikes()
+        
     })
 
    

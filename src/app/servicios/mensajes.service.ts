@@ -82,7 +82,8 @@ export class MensajesService {
 
       this.cargarLikes()
       
-      if(this.numero_like_viejo == this.numero_like){
+      
+      if(this.numero_like_viejo == this.Array_iduser.length){
         if(this.ejecutarHasta == true){
 
           this.TraerMensaje(this.mensaje._id).subscribe((resp:any)=>{
@@ -95,7 +96,7 @@ export class MensajesService {
         }
 
         return
-      }else if(this.numero_nolike_viejo == this.numero_nolike){
+      }else if(this.numero_nolike_viejo == this.Array_iduserNolike.length){
         if(this.ejecutarHasta == true){
           this.TraerMensaje(this.mensaje._id).subscribe((resp:any)=>{
             console.log(resp)
@@ -114,38 +115,49 @@ export class MensajesService {
 
    cargarLikes(){
     if(this.Array_iduser.indexOf(this.id_Usuario) >= 0){
-      this.CargarLikes()
       this.like = true;
     }else {
       this.like = false
     }
+    this.CargarLikes()
 
     if(this.Array_iduserNolike.indexOf(this.id_Usuario) >= 0){
-      this.CargarNoLikes()
       this.no_like =  true;
     }else{
       this.no_like = false;
     }
+    this.CargarNoLikes()
 
     if(this.Array_iduser.length == 0 && this.Array_iduserNolike.length == 0){
       this.barra = 50
     }
+
    }
 
    CargarLikes(){
+    if(this.Array_iduserNolike.length == 0 && this.Array_iduser.length == 0){
+      this.barra = 50;
+      console.log('entro en cargar no likes')
+      return
+    }
     this.resultado = this.Array_iduser.length + this.Array_iduserNolike.length;
-    this.barra = this.resultado / this.Array_iduser.length * 100
+    this.barra =  this.Array_iduser.length / this.resultado  * 100
     console.log(this.barra)
    }
 
    CargarNoLikes(){
+    if(this.Array_iduserNolike.length == 0 && this.Array_iduser.length == 0){
+      this.barra = 50;
+      console.log('entro en cargar no likes')
+      return
+    }
     if(this.Array_iduserNolike.length >= 0 && this.Array_iduser.length <= 0){
       this.barra = 0;
       console.log('entro en cargar no likes')
       return
     }
     this.resultado = this.Array_iduser.length + this.Array_iduserNolike.length;
-    this.barra = this.resultado / this.Array_iduserNolike.length * 100
+    this.barra =   this.Array_iduserNolike.length / this.resultado * 100
     console.log(this.barra)
    }
 
@@ -168,14 +180,14 @@ export class MensajesService {
     this.ejecutarHasta = true
     if(opcion == 'like'){
       console.log(this.like)
-        this.numero_like_viejo = this.numero_like;
-        this.numero_nolike_viejo = this.numero_nolike;
+        this.numero_like_viejo = this.Array_iduser.length;
+        this.numero_nolike_viejo = this.Array_iduserNolike.length;
         this.GuardarLike('likes','no',this.mensaje._id).subscribe()
         return
     }else if(opcion == 'no_like'){
       console.log(this.like)
-      this.numero_like_viejo = this.numero_like;
-      this.numero_nolike_viejo = this.numero_nolike;
+      this.numero_like_viejo = this.Array_iduser.length;
+        this.numero_nolike_viejo = this.Array_iduserNolike.length;
       this.GuardarLike('no','no_like',this.mensaje._id).subscribe()
         return
     }
