@@ -32,6 +32,8 @@ export class SolucionComponent implements OnInit {
 
   ngOnInit() {
 
+    
+
     // this._mensajesService.mensaje = {
     //   "nombre_error":"",
     //   "tipo_error":"",
@@ -43,11 +45,12 @@ export class SolucionComponent implements OnInit {
       
 
     this._mensajesService.TraerMensaje(this.id).subscribe((resp:any)=>{
-      console.log(resp)
       this._mensajesService.mensaje = resp;
-        this._mensajesService.Array_iduser = this._mensajesService.mensaje.likes;
-        this._mensajesService.Array_iduserNolike = this._mensajesService.mensaje.no_megusta;
-        this._mensajesService.cargarLikes()
+      this._mensajesService.CargarLikeDB().subscribe()
+      this._mensajesService.CargarNolikeDB().subscribe()
+        // this._mensajesService.Array_iduser = this._mensajesService.mensaje.likes;
+        // this._mensajesService.Array_iduserNolike = this._mensajesService.mensaje.no_megusta;
+        // this._mensajesService.cargarLikes()
         
     })
 
