@@ -29,7 +29,11 @@ export class InicioComponent implements OnInit {
     public socket:SocketService,
     public _ServicioMensaje:MensajesService
   ) { }
-
+  
+  ngOnDestroy() {
+    console.log('salio')
+    this._ServicioMensaje.Resultado_busqueda = []
+  }
 
   ngOnInit() {
 
@@ -300,7 +304,28 @@ export class InicioComponent implements OnInit {
   }
 
   salir(){
-    this._UsuarioService.logout()
+    const swalWithBootstrapButtons = swal.mixin({
+      confirmButtonClass: 'btn btn-success',
+      cancelButtonClass: 'btn btn-danger',
+      buttonsStyling: false,
+    })
+
+    swal({
+      title: '¿Seguro que desea salir de Quick?',
+      text: "Esta saliendo de Quick",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, salir'
+    }).then((result) => {
+      if (result.value) {
+        this._UsuarioService.logout()
+      }else if (
+    // Read more about handling dismissals
+    result.dismiss === swal.DismissReason.cancel
+      ) {}
+    })
     
   }
 

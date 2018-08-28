@@ -235,7 +235,40 @@ export class RegistrarSolucionComponent implements OnInit {
   }
 
   borrar(id:string){
-    this._mensaje.BorrarMensaje(id).subscribe()
+    const swalWithBootstrapButtons = swal.mixin({
+      confirmButtonClass: 'btn btn-success',
+      cancelButtonClass: 'btn btn-danger',
+      buttonsStyling: false,
+    })
+
+    swal({
+      title: '¿Seguro que desea borrar esta solucion?',
+      text: "Si continua no podrá revertir los cambios",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, borrar'
+    }).then((result) => {
+      if (result.value) {
+        this._mensaje.BorrarMensaje(id).subscribe()
+        swal(
+          'Borrado',
+          'Tu solucion se ha borrado correctamente',
+          'success'
+        )
+      }else if (
+    // Read more about handling dismissals
+    result.dismiss === swal.DismissReason.cancel
+      ) {
+        console.log('borrada cancelado')
+        swalWithBootstrapButtons(
+          'Cancelado',
+          'Tu solucion no fue borrada',
+          'error'
+        )
+      }
+    })
   }
 
   enviarAsolucion(id:string){

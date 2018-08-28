@@ -65,7 +65,15 @@
                         box-shadow: 0px 1px 5px -1px gray;
                         transition: all 0.5s ease;
                     }
-                    // .input_bus:hover {
+                    .input_bus:hover {
+                        padding: 20px;
+                        width: 60%;
+                        height: 50px;
+                        outline: none;
+                        border: none;
+                        box-shadow: 0px 3px 5px -1px gray;
+                    }
+                    // .input_bus:active {
                     //     padding: 20px;
                     //     width: 60%;
                     //     height: 50px;
@@ -73,6 +81,14 @@
                     //     border: none;
                     //     box-shadow: 0px 3px 5px -1px gray;
                     // }
+                    .input_bus:focus {
+                        padding: 20px;
+                        width: 60%;
+                        height: 50px;
+                        outline: none;
+                        border: none;
+                        box-shadow: 0px 3px 5px -1px gray;
+                    }
                 }
                 .buttons {
                     width: 100%;

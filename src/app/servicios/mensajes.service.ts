@@ -246,8 +246,6 @@ export class MensajesService {
             'Registrado correctamente',
             'success'
           )
-      this.TraerMensajeConId().subscribe((resp:any)=>{
-      })
       this.mensaje = {
         "nombre_error":"",
         "tipo_error":"",
@@ -298,9 +296,9 @@ export class MensajesService {
     let url = URL_SERVICIOS + 'mensajes/' + this.mensaje._id;
     return this._Http.put(url,this.mensaje).pipe(map((resp:any)=>{
       this.TraerMensajeConId().subscribe((resp:any)=>{
-        // this._socketService.socket.emit('mensajeDB',{
-        //   mensajeActual: resp
-        // })
+        this._socketService.socket.emit('mensajeDB',{
+          mensajeActual: resp
+        })
         
       })
       
@@ -324,46 +322,12 @@ export class MensajesService {
     let url = URL_SERVICIOS + 'mensajes/borrar/' + id;
 
     return this._Http.put(url,this.mensaje).pipe(map((resp:any)=>{
-      const swalWithBootstrapButtons = swal.mixin({
-        confirmButtonClass: 'btn btn-success',
-        cancelButtonClass: 'btn btn-danger',
-        buttonsStyling: false,
+      this.TraerMensajeConId().subscribe((resp:any)=>{
+        this._socketService.socket.emit('mensajeDB',{
+          mensajeActual: resp
+        })
+        
       })
-      
-      swalWithBootstrapButtons({
-        title: 'Seguro que desea borrarlo?',
-        text: "Si continua no podrá revertir los cambios",
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Si, borrar',
-        cancelButtonText: 'No, Cancelar',
-        reverseButtons: true
-      }).then((result) => {
-        if (result.value) {
-          swalWithBootstrapButtons(
-            'Borrado',
-            'Tu solucion se ha borrado correctamente',
-            'success'
-          )
-
-          this.TraerMensajeConId().subscribe((resp:any)=>{
-            // this._socketService.socket.emit('mensajeDB',{
-            //   mensajeActual: resp
-            // })
-            
-          })
-        } else if (
-          // Read more about handling dismissals
-          result.dismiss === swal.DismissReason.cancel
-        ) {
-          swalWithBootstrapButtons(
-            'Cancelado',
-            'Tu solucion no fue borrada',
-            'error'
-          )
-        }
-      })
-      
     }))
   }
 }

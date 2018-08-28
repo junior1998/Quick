@@ -3,7 +3,7 @@
         <div class="content_top">
             <div class="interior_buscar">
                 <div class="imagen">
-                    <img class="img" src="../../../../assets/img/images1.png">
+                    <img style="cursor: pointer" [routerLink]="['/pages/inicio']" class="img" src="../../../../assets/img/images1.png">
                 </div>
                 <div class="input_buscar">
                     <input #input (keyup)="buscarSolucion(input.value)" id="buscar_solucion1" type="text" class="input_bus">
