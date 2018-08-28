@@ -44,11 +44,15 @@
                                 <div class="valoracion">
                                     <div class="likes">
                                         <div class="like">
-                                            <i (click)="likes('like')" [ngClass]="{likeActivo:this._mensajesService.like}" class="likeNormal fas fa-thumbs-up"></i>
+
+                                            <i *ngIf="this._mensajesService.proceso_like == true" (click)="likes('like')" [ngClass]="{likeActivo:this._mensajesService.like}" class="likeNormal fas fa-thumbs-up"></i>
+
+                                            <i *ngIf="this._mensajesService.proceso_like == false" [ngClass]="{likeActivo:this._mensajesService.like}" class="likeNormal fas fa-thumbs-up"></i>
                                             <span class="numero_like">{{this._mensajesService.Array_iduser.length}}</span>
                                         </div>
                                         <div class="no-like">
-                                            <i (click)="likes('no_like')" [ngClass]="{no_likeActivo:this._mensajesService.no_like}" class="fas fa-thumbs-down no_likeNormal"></i>
+                                            <i *ngIf="this._mensajesService.proceso_nolike == true" (click)="likes('no_like')" [ngClass]="{no_likeActivo:this._mensajesService.no_like}" class="fas fa-thumbs-down no_likeNormal"></i>
+                                            <i *ngIf="this._mensajesService.proceso_nolike == false" [ngClass]="{no_likeActivo:this._mensajesService.no_like}" class="fas fa-thumbs-down no_likeNormal"></i>
                                             <span class="numero_like">{{this._mensajesService.Array_iduserNolike.length}}</span>
 
                                         </div>

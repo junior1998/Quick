@@ -91,7 +91,10 @@ export class SolucionComponent implements OnInit {
   }
 
   likes(opcion){
-      this._mensajesService.likes(opcion)
+      if(this._mensajesService.proceso_like == true || this._mensajesService.proceso_nolike == true){
+        this._mensajesService.likes(opcion)
+
+      }
   }
 
   buscarSolucion(busqueda:string){
