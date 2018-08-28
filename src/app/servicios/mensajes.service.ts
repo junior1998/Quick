@@ -75,59 +75,45 @@ export class MensajesService {
       // console.log(this.mensaje)
     })
 
-    this._socketService.socket.on('mensajesObjetoEmitido',(elMensajeEmitido)=>{
-      console.log(elMensajeEmitido.mensaje)
-      if(elMensajeEmitido.mensaje.mensaje == "nolike"){
-        console.log("si")
-      }else if(elMensajeEmitido.mensaje.mensaje == "like"){
-        console.log("si")
-
+    this._socketService.socket.on('ArrayNOLikesEmitido',(nolikesEmitidos)=>{
+        if(nolikesEmitidos.nolikes == ''){
+          this.Array_iduserNolike.length = 0
+          this.CargarLikeDB().subscribe()
+          console.log('fallo, llando cargar likeDB')
+          this.CargarNolikeBarra()
+          console.log('llamando cargar barra nolikes ' + this.barra)
+              // if(this.Array_iduserNolike.length >= 1 && this.barra == 0){
+              // }
+          return
+        }
+           for(let like in nolikesEmitidos.nolikes){
+        if(nolikesEmitidos.nolikes[like].id_mensaje == this.mensaje._id){
+            this.Array_iduserNolike.length = nolikesEmitidos.nolikes.length
+            this.CargarNolikeBarra()
+            console.log('llamando cargar barra nolikes ' + this.barra)
+              break
+        }
       }
-      // if(resp.nolike.length >= 1){
-      //   if(resp.nolike[0].id_usuario == this.id_Usuario){
-      //     this.like = false
-      //     this.no_like = true
-      //   }
-      //   this.Array_iduserNolike.length = resp.nolike.length
-      //   // this.CargarLikeDB().subscribe()
-      //   this.CargarNolikeBarra() 
-      //   return true
-      // }
-      // this.Array_iduserNolike.length = 0
-      // this.CargarLikeDB().subscribe()
-      // this.CargarNolikeBarra() 
-      // this.mensaje = elMensajeEmitido.mensaje;
-      // this.Array_iduser = this.mensaje.likes;
-      // this.Array_iduserNolike = this.mensaje.no_megusta;
       
+    })
+
+    this._socketService.socket.on('ArrayLikesEmitido',(likesEmitidos)=>{
+        if(likesEmitidos.likes == ''){
+          this.Array_iduser.length = 0
+          this.CargarNolikeDB().subscribe()
+          this.CargarLikesBarra()
+          console.log('llamando cargar barra likes ' + this.barra)
+          return
+        }
+           for(let like in likesEmitidos.likes){
+        if(likesEmitidos.likes[like].id_mensaje == this.mensaje._id){
+            this.Array_iduser.length = likesEmitidos.likes.length
+            this.CargarLikesBarra()
+            console.log('llamando cargar barra likes ' + this.barra)
+              break
+        }
+      }
       
-      // if(this.numero_like_viejo == this.Array_iduser.length){
-      //   if(this.ejecutarHasta == true){
-
-      //     this.TraerMensaje(this.mensaje._id).subscribe((resp:any)=>{
-      //       console.log(resp)
-      //       this._socketService.socket.emit('MensajeObjeto',{
-      //         mensajeActual: resp
-      //       })
-      //     })
-      //     this.ejecutarHasta = false;
-      //   }
-
-      //   return
-      // }else if(this.numero_nolike_viejo == this.Array_iduserNolike.length){
-      //   if(this.ejecutarHasta == true){
-      //     this.TraerMensaje(this.mensaje._id).subscribe((resp:any)=>{
-      //       console.log(resp)
-      //       this._socketService.socket.emit('MensajeObjeto',{
-      //         mensajeActual: resp
-      //       })
-      //       return
-      //     })
-      //     this.ejecutarHasta = false;
-      //   }
-        
-      // }
-
     })
    }
 
@@ -138,9 +124,10 @@ export class MensajesService {
     let url = URL_SERVICIOS + 'likes/likes/' + this.mensaje._id + '/' + id;
 
     return this._Http.post(url,this.mensaje).pipe(map((resp:any)=>{
-      console.log(resp)
-
-      this.CargarLikeDB().subscribe()
+      this._socketService.socket.emit('ArrayLikes',{
+        likeDB: this.mensaje._id
+      })
+      // this.CargarLikeDB().subscribe()
 
     }))
    }
@@ -150,9 +137,11 @@ export class MensajesService {
    let url = URL_SERVICIOS + 'likes/nolikes/' + this.mensaje._id + '/' + id
 
    return this._Http.post(url,this.mensaje).pipe(map((resp:any)=>{
-     console.log(resp)
+     this._socketService.socket.emit('ArrayNoLikes',{
+      NolikeDB: this.mensaje._id
+    })
     //  this.CargarLikeDB().subscribe()
-    this.CargarNolikeDB().subscribe()
+    // this.CargarNolikeDB().subscribe()
  
    }))
    }
@@ -160,99 +149,110 @@ export class MensajesService {
    
 
    CargarLikesBarra(){
+      //  if(this.Array_iduser.length <= 0 && this.like == true || this.Array_iduser.length >= 0 && this.like == false){
+      //     this.CargarLikeDB().subscribe()
+      //  }
+       console.log(this.Array_iduser.length, this.Array_iduserNolike.length)
         this.resultado = this.Array_iduser.length + this.Array_iduserNolike.length;
-        this.barra = this.resultado / this.Array_iduser.length * 100
-      // if(this.Array_iduserNolike.length == 0 && this.Array_iduser.length == 0){
-      //   this.barra = 50;
-      // }
-      console.log(this.barra)
+        if(this.Array_iduserNolike.length == 0 && this.Array_iduser.length == 0){
+          this.barra = 50;
+          return
+        }
+        this.barra = this.Array_iduser.length / this.resultado * 100
+
    }
 
    CargarNolikeBarra(){
+  //   if(this.Array_iduserNolike.length <= 0 && this.no_like == true || this.Array_iduserNolike.length >= 0 && this.no_like == false){
+  //     this.CargarNolikeDB().subscribe()
+  //  }
+    console.log(this.Array_iduser.length, this.Array_iduserNolike.length)
+
+    //  if(this.Array_iduserNolike.length <= 0){
+    //    return
+    //  }
     this.resultado = this.Array_iduser.length + this.Array_iduserNolike.length;
-    this.barra = this.resultado / this.Array_iduserNolike.length * 100
     if(this.Array_iduserNolike.length == 0 && this.Array_iduser.length == 0){
       this.barra = 50;
+      return
     }
     if(this.Array_iduserNolike.length > 0 && this.Array_iduser.length <= 0){
       this.barra = 0;
+      return
     }
-    console.log(this.barra)
+    this.barra = this.Array_iduserNolike.length / this.resultado * 100
    }
 
   likes(opcion:string){
     this.ejecutarHasta = true
     if(opcion == 'like' && !this.no_like){
-      this.numero_like_viejo = this.Array_iduser.length;
-      this.numero_nolike_viejo = this.Array_iduserNolike.length;
-      this.GuardarLike().subscribe()
+      // this.numero_like_viejo = this.Array_iduser.length;
+      // this.numero_nolike_viejo = this.Array_iduserNolike.length;
       this.like = !this.like
+      this.GuardarLike().subscribe()
         return
     }else if(opcion == 'no_like' && !this.like){
-      this.numero_like_viejo = this.Array_iduser.length;
-      this.numero_nolike_viejo = this.Array_iduserNolike.length;
-      this.GuardarNolike().subscribe()
+      // this.numero_like_viejo = this.Array_iduser.length;
+      // this.numero_nolike_viejo = this.Array_iduserNolike.length;
       this.no_like = !this.no_like;
+      this.GuardarNolike().subscribe()
         return
     }else{
-      this.like? this.GuardarLike().subscribe()? this.GuardarNolike().subscribe():console.log('nada'):
-      this.no_like? this.GuardarNolike().subscribe()? this.GuardarLike().subscribe():console.log('nada'):console.log('nada')
-
+      this.like? this.GuardarLike().subscribe()? this.GuardarNolike().subscribe() : console.log('nada') : console.log('termino') 
+      this.no_like? this.GuardarNolike().subscribe()? this.GuardarLike().subscribe() : console.log('nada') : console.log('termino') 
+      this.like = !this.like
+      this.no_like = !this.no_like
     }
   }
 
   CargarLikeDB(){
+    console.log('llamaron cargar likesDB')
     let url = URL_SERVICIOS + 'likes/likes/' + this.mensaje._id
     // this.CargarLikesBarra()
     return this._Http.get(url).pipe(map((resp:any)=>{
       for(let like in resp.like){
         if(resp.like[like].id_usuario == this.id_Usuario){
-          this.CargarLikesBarra()
           this.like = true
           this.no_like = false
         }
       }
       if(resp.like.length >= 1){
         this.Array_iduser.length = resp.like.length
-        console.log(this.barra)
-        // this.CargarNolikeDB().subscribe()
+        this.CargarLikesBarra()
         return true
       }
       this.Array_iduser.length = 0
-      // this.CargarNolikeDB().subscribe()
-      // this.CargarLikesBarra()
-      console.log(this.barra)
+      this.CargarNolikeBarra()
+      if(this.Array_iduser.length <= 0 && this.like == true){
+        this.like = false;
+      }
         return true
     }))
    
   }
 
   CargarNolikeDB(){
+    console.log('llamaron cargar nolikesDB')
     let url = URL_SERVICIOS + 'likes/nolikes/' + this.mensaje._id
     return this._Http.get(url).pipe(map((resp:any)=>{
-      console.log(resp)
-      // this._socketService.socket.emit('MensajeObjeto',{
-      //   mensajeActual: resp.nolike
-      // })
       for(let nolike in resp.nolike){
         if(resp.nolike[nolike].id_usuario == this.id_Usuario){
-          this.CargarNolikeBarra()
           this.like = false
           this.no_like = true
         }
       }
+      
       if(resp.nolike.length >= 1){
         this.Array_iduserNolike.length = resp.nolike.length
-        // this.CargarLikeDB().subscribe()
-        console.log(this.barra)
+        this.CargarNolikeBarra()        
         return true
       }
-      // this.CargarNolikeBarra()
       this.Array_iduserNolike.length = 0
-      console.log(this.barra)
+      this.CargarLikesBarra()
+      if(this.Array_iduserNolike.length <= 0 && this.no_like == true){
+        this.no_like = false;
+      }
        return true;
-       // return resp.mensaje;
-       
     }))
   }
 
