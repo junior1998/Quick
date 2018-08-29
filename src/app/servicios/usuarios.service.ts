@@ -161,7 +161,6 @@ export class UsuariosService {
         localStorage.setItem('usuario', JSON.stringify(resp.usuario));
 
         this.CargarUsuarioID().subscribe((resp:any)=>{
-          console.log(resp)
           this.UsuarioObjeto = resp;
           this.google = this.UsuarioObjeto.google;
         })
@@ -181,7 +180,6 @@ export class UsuariosService {
                 localStorage.setItem('usuario', JSON.stringify(resp.usuario));
                 localStorage.setItem('role_token','activado')
                 this.CargarUsuarioID().subscribe((resp:any)=>{
-                  console.log(resp)
                   this.UsuarioObjeto = resp;
                   this.google = this.UsuarioObjeto.google;
                 })

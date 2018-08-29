@@ -31,7 +31,6 @@ export class InicioComponent implements OnInit {
   ) { }
   
   ngOnDestroy() {
-    console.log('salio')
     this._ServicioMensaje.Resultado_busqueda = []
   }
 

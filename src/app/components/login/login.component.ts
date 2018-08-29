@@ -46,7 +46,10 @@ export class LoginComponent implements OnInit {
 
 
 
+
       setTimeout(function(){
+        $('#nombre').focus()
+
         $('#nombre').trigger('click');
         $('#clave').trigger('click');
         if($("#clave").val() && $("#nombre").val() ){
@@ -296,16 +299,15 @@ export class LoginComponent implements OnInit {
   //  let contraConfir = this.UsuService.ConfirmarContrase()
   if(this.UsuService.UsuarioContra.password == this.UsuService.UsuarioContra.password1){
     this.UsuService.UsuarioObjeto.password = this.UsuService.UsuarioContra.password1
-    console.log(this.UsuService.UsuarioObjeto)
     this.UsuService.CrearUsuario().subscribe(((resp:any)=>{
       swal(
         'Usuario: ' + resp.usuario,
         'Creado correctamente',
         'success'
       )
-      // this.UsuService.UsuarioContra.password1 = "";
-
+      
       setTimeout(()=>{
+        // window.location.reload()
         
         $('input').blur();
 
@@ -314,7 +316,6 @@ export class LoginComponent implements OnInit {
      }), error=>{
       
       //  var texto = error.error.errors.message.split(":")
-       console.log(error.error)
        
        swal(
         'Error',
@@ -340,13 +341,16 @@ export class LoginComponent implements OnInit {
       
       
     if(valor == 1 && this.estado_ventana == 1){
-      
-        $(".registrar_pantalla").css("opacity","10");
-        $(".login_pantalla").css("opacity","0");
-        $(".pantallas").css("margin-left","-100%");
-        $(".interior").css("height","600px");
+      $(".registrar_pantalla").css("opacity","10");
+      $(".login_pantalla").css("opacity","0");
+      $(".pantallas").css("margin-left","-100%");
+      $(".interior").css("height","600px");
   
         this.estado_ventana = 2;
+
+        setTimeout(()=>{
+          $('#nombreCom').focus()
+        },150)
   
      
     }else{
@@ -358,6 +362,10 @@ export class LoginComponent implements OnInit {
           $(".interior").css("height","500px");
     
           this.estado_ventana = 1;
+
+          setTimeout(()=>{
+            $('#nombre').focus()
+          },150)
        
       }
     }
@@ -399,6 +407,7 @@ export class LoginComponent implements OnInit {
             
             'error'
           )
+
         })
 
       }

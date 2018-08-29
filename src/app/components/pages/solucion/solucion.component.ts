@@ -127,15 +127,15 @@ export class SolucionComponent implements OnInit {
   }
 
   enviarAsolucion(id:string){
-    this.router.navigate(['/pages/solucion',id])
     $('#buscar_solucion1[type="text"]').val('');
     this.buscarSolucion('')
     $('#buscar_solucion1').keyup()
+    this.router.navigate(['/pages/registrar-solucion'])
     this._mensajesService.TraerMensaje(this.id).subscribe((resp:any)=>{
-      console.log(resp)
+      this.router.navigate(['/pages/solucion',id])
       this._mensajesService.mensaje = resp
-     
-      
+      this._mensajesService.CargarNolikeDB().subscribe()
+      this._mensajesService.CargarLikeDB().subscribe()
     })
     }
     goBack(){
